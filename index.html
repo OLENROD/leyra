@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leyra, guía ilustrada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant:wght@500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* VOICE: misterio gótico escolar, contado claro para chicos de 12-13 años
+   IDEA: un cuaderno de caligrafía del Instituto Témpore, tinta y lacre
+   PICTURE: escenas en tinta (instituto, cisne, capa roja, casa del árbol) dibujadas en SVG
+   COLOUR and TYPE: tinta azul-negra, papel blanco, rojo capa; Pinyon Script + Cormorant + Spectral
+   LAYOUT: portada-escena, solapas por capítulo, cada parte con su lámina */
+:root{color-scheme:light dark;
+--bg:light-dark(#fbfbfd,#0f1119);--paper:light-dark(#ffffff,#171a26);--ink:light-dark(#151826,#e9eaf2);
+--soft:light-dark(#5b6075,#a6abc0);--line:light-dark(#dcdfe8,#2b3042);--red:light-dark(#b0122c,#ff5a72);
+--blue:light-dark(#1f3a8a,#8fa8ff);--deep:#121626;--deep2:#1d2340}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Spectral,Georgia,serif;overflow-x:clip}
+h1,h2,h3{font-family:Cormorant,Georgia,serif;line-height:1.08;text-wrap:balance;margin:0 0 .4em}
+h2{font-size:clamp(32px,4.4vw,48px)}h3{font-size:24px}
+p{max-width:68ch;margin:0 0 1em}
+a{color:var(--blue)}
+.band{padding:clamp(28px,4vw,60px) max(5vw,16px)}
+.wrap{max-width:1180px;margin:0 auto}
+/* portada */
+.hero{background:radial-gradient(120% 90% at 75% 10%,#2b3566 0,var(--deep2) 40%,var(--deep) 100%);color:#eef0f8}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(20px,4vw,56px);align-items:center}
+.logo{font-family:"Pinyon Script",cursive;font-size:clamp(84px,13vw,150px);line-height:.9;margin:0;font-weight:400}
+.by{font-family:Cormorant,serif;font-size:24px;margin:.2em 0 1em;color:#c9cde4}
+.hero p{color:#d7daea}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.facts span{border:1px solid #4a5384;border-radius:99px;padding:5px 13px;font-size:14px;color:#dfe2f3}
+.scene{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 30px #0008)}
+/* solapas */
+nav{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:4px;overflow-x:auto;max-width:1180px;margin:0 auto;padding:8px max(5vw,16px);scrollbar-width:thin}
+.tabs button{flex:none;font:600 15px Spectral,serif;color:var(--soft);background:none;border:0;border-bottom:3px solid transparent;padding:10px 12px;min-height:44px;cursor:pointer}
+.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--red)}
+.tabs button:focus-visible,.btn:focus-visible,.opt:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+section[hidden]{display:none}
+.lede{font-size:19px;color:var(--soft)}
+.two{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:start}
+.plate{background:var(--deep);border-radius:14px;padding:10px;box-shadow:0 10px 30px #0002}
+.plate svg{width:100%;height:auto;display:block}
+.cap{font-size:14px;color:var(--soft);margin-top:8px;font-style:italic}
+.kicker{font-family:Cormorant,serif;font-size:20px;color:var(--red);font-weight:700;margin-bottom:4px}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:0 0 16px}
+.box h3{margin-bottom:.3em}
+ul.dots{padding-left:1.1em;margin:0 0 1em}ul.dots li{margin:.3em 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;align-items:start}
+.card svg{width:64px;height:64px}
+.card b{font-family:Cormorant,serif;font-size:22px;display:block;line-height:1.1}
+.card small{color:var(--red);font-weight:600;display:block;margin:2px 0 6px}
+.card p{font-size:15px;margin:0}
+.group{margin:22px 0 10px;font-family:Cormorant,serif;font-size:26px}
+.quote{font-family:Cormorant,serif;font-size:24px;font-style:italic;border-left:4px solid var(--red);padding:4px 0 4px 16px;margin:18px 0;max-width:60ch}
+.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+.steps li{position:relative;padding:0 0 16px 46px;counter-increment:s}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font:700 15px Spectral,serif}
+.steps li::after{content:"";position:absolute;left:15px;top:34px;bottom:2px;width:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+.bar{display:grid;grid-template-columns:150px minmax(0,1fr) 40px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
+.bar i{display:block;height:16px;border-radius:4px;background:var(--red)}
+.bar span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+details.spoiler{border:2px dashed var(--red);border-radius:12px;padding:12px 18px;background:var(--paper)}
+details.spoiler summary{cursor:pointer;font-weight:600;color:var(--red);min-height:32px}
+.btn{font:600 16px Spectral,serif;background:var(--red);color:#fff;border:0;border-radius:8px;padding:10px 18px;min-height:44px;cursor:pointer}
+.q{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.q p{font-weight:600;margin-bottom:8px}
+.opt{display:block;width:100%;text-align:left;font:16px Spectral,serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 0;min-height:44px;cursor:pointer}
+.opt.ok{border-color:#1f8a4c;background:light-dark(#e7f6ec,#143524)}.opt.no{border-color:var(--red);background:light-dark(#fbe9ec,#3a1520)}
+.fb{font-size:15px;color:var(--soft);min-height:1.4em}
+#score{font-family:Cormorant,serif;font-size:28px}
+footer{border-top:1px solid var(--line);color:var(--soft);font-size:14px}
+@media (prefers-reduced-motion:no-preference){section:not([hidden]){animation:in .45s ease}@keyframes in{from{opacity:0;transform:translateY(8px)}}}
+@media(max-width:820px){.hero .wrap,.two{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.bar{grid-template-columns:110px minmax(0,1fr) 32px}.card{grid-template-columns:48px minmax(0,1fr)}.card svg{width:48px;height:48px}}
+</style>
+</head>
+<body>
+
+<header class="band hero">
+  <div class="wrap">
+    <div>
+      <h1 class="logo">Leyra</h1>
+      <div class="by">una novela de Pablo De Santis · guía ilustrada de lectura</div>
+      <p>Una chica de catorce años que dibuja mejor que nadie entra a un colegio de señoritas donde cada trazo de tinta es definitivo. Detrás de las aulas hay una fábrica de tintas en ruinas, una mansión junto a un lago y un secreto que alguien quiere esconder a cualquier precio.</p>
+      <div class="facts"><span>Santillana / Loqueleo, 2018</span><span>4 partes · 53 capítulos</span><span>Novela juvenil de misterio gótico</span></div>
+      <p style="margin-top:18px;font-size:15px">¿Querés ver la tapa original? <a style="color:#aebfff" href="https://www.goodreads.com/book/show/38472696-leyra">Abrila en Goodreads</a>.</p>
+    </div>
+    <svg class="scene" viewBox="0 0 600 470" role="img" aria-label="Ilustración: el Instituto Témpore de noche, con una chica de capa roja y un cisne en el lago">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26306a"/><stop offset="1" stop-color="#0e1124"/></linearGradient>
+        <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2450"/><stop offset="1" stop-color="#090b18"/></linearGradient>
+        <radialGradient id="moon"><stop offset="0" stop-color="#fffbe8"/><stop offset=".6" stop-color="#f3ecc8"/><stop offset="1" stop-color="#f3ecc8" stop-opacity="0"/></radialGradient>
+        <g id="win"><rect width="16" height="26" rx="8" fill="#ffd77a"/><rect x="7" width="2" height="26" fill="#0e1124" opacity=".6"/></g>
+      </defs>
+      <rect width="600" height="470" rx="16" fill="url(#sky)"/>
+      <circle cx="470" cy="90" r="70" fill="url(#moon)" opacity=".5"/><circle cx="470" cy="90" r="38" fill="#fbf4d6"/>
+      <g fill="#fff" opacity=".7"><circle cx="60" cy="50" r="1.5"/><circle cx="150" cy="90" r="1"/><circle cx="260" cy="40" r="1.6"/><circle cx="360" cy="70" r="1"/><circle cx="560" cy="170" r="1.3"/><circle cx="90" cy="150" r="1"/></g>
+      <!-- instituto -->
+      <g>
+        <path d="M70 330 V190 l40-40 40 40 V330Z" fill="#161b38"/>
+        <path d="M150 330 V170 h230 V330Z" fill="#1a2044"/>
+        <path d="M140 172 L265 110 390 172Z" fill="#12162f"/>
+        <path d="M380 330 V200 l35-45 35 45 V330Z" fill="#161b38"/>
+        <rect x="255" y="60" width="20" height="60" fill="#12162f"/><path d="M250 62 L265 30 280 62Z" fill="#12162f"/>
+        <g fill="#ffd77a"><use href="#win" x="180" y="200"/><use href="#win" x="220" y="200"/><use href="#win" x="300" y="200" opacity=".3"/><use href="#win" x="340" y="200"/><use href="#win" x="100" y="210" opacity=".4"/><use href="#win" x="407" y="215"/></g>
+        <g fill="#232a58"><rect x="170" y="255" width="10" height="75"/><rect x="215" y="255" width="10" height="75"/><rect x="305" y="255" width="10" height="75"/><rect x="350" y="255" width="10" height="75"/></g>
+        <path d="M245 330 v-45 a20 20 0 0 1 40 0 v45Z" fill="#0b0e1f"/>
+      </g>
+      <!-- lago -->
+      <rect x="0" y="330" width="600" height="140" fill="url(#lake)"/>
+      <g stroke="#3a4688" stroke-width="2" opacity=".6"><path d="M40 360h90M200 380h140M420 360h120M110 420h80M330 440h150"/></g>
+      <rect x="455" y="350" width="30" height="80" fill="#fbf4d6" opacity=".12"/>
+      <!-- cisne -->
+      <g transform="translate(390 372)">
+        <path d="M0 22 C10 40 70 40 82 20 C70 24 40 22 30 14 Z" fill="#f2f2f6"/>
+        <path d="M30 16 C26 -4 34 -28 48 -26 C56 -25 56 -16 50 -14 C42 -12 40 0 44 18Z" fill="#f2f2f6"/>
+        <path d="M50 -24 l12 4 -11 3Z" fill="#e05a2b"/>
+        <ellipse cx="42" cy="34" rx="44" ry="4" fill="#fff" opacity=".12"/>
+      </g>
+      <!-- chica con capa roja -->
+      <g transform="translate(120 300)">
+        <ellipse cx="22" cy="82" rx="30" ry="5" fill="#000" opacity=".35"/>
+        <path d="M22 0 C6 4 2 30 -4 80 H48 C42 30 38 4 22 0Z" fill="#b0122c"/>
+        <path d="M22 0 C10 3 8 24 6 80 H22Z" fill="#7d0a1e"/>
+        <circle cx="22" cy="10" r="11" fill="#f1d3bd"/>
+        <path d="M9 12 C9 -4 35 -4 35 12 C33 4 12 4 9 12Z" fill="#2a1a14"/>
+        <path d="M6 2 C10 -12 34 -12 38 2 C40 16 36 26 36 26 L34 10 C30 -2 14 -2 10 10 L8 26 C4 18 4 10 6 2Z" fill="#c8162f"/>
+        <rect x="40" y="38" width="14" height="18" rx="2" fill="#efe9da" transform="rotate(12 47 47)"/>
+      </g>
+      <!-- pluma -->
+      <g transform="translate(520 250) rotate(25)"><path d="M0 0 C18 -40 24 -80 6 -120 C-10 -80 -14 -40 0 0Z" fill="#e9e9f0" opacity=".85"/><path d="M0 0 L5 -110" stroke="#9aa0c4" stroke-width="1.5"/><path d="M0 0 l-2 14 4 0Z" fill="#9aa0c4"/></g>
+    </svg>
+  </div>
+</header>
+
+<nav aria-label="Capítulos de la guía"><div class="tabs" role="tablist" id="tabs"></div></nav>
+
+<main class="band"><div class="wrap">
+
+<section id="inicio" data-t="Inicio">
+  <div class="two">
+    <div>
+      <div class="kicker">De qué trata</div>
+      <h2>Una heroína, un colegio y una casa con secretos</h2>
+      <p class="lede">Leyra Simonides vive con su abuela en un pueblo de la provincia de Buenos Aires. Como la escuela del pueblo termina en tercer año, la abuela consigue que la acepten en el Instituto Témpore, un internado de señoritas donde se enseña dibujo y caligrafía.</p>
+      <p>Allí Leyra se destaca enseguida, lo que le trae una amiga (Julia) y una enemiga feroz (Bastiana Libra). Gana un concurso para ilustrar el último libro del escritor Gabriel Témpore y pasa las vacaciones de invierno en la mansión de la familia, donde empiezan a pasar cosas cada vez más inquietantes.</p>
+      <div class="box">
+        <h3>Ficha técnica</h3>
+        <ul class="dots">
+          <li><b>Autor:</b> Pablo De Santis (Buenos Aires, 1963)</li>
+          <li><b>Editorial:</b> Santillana, colección Loqueleo · 2018 · unas 210 páginas</li>
+          <li><b>Género:</b> mezcla de terror gótico, policial, novela de aprendizaje y aventuras</li>
+          <li><b>Narrador:</b> tercera persona, omnisciente pero muy pegado a lo que siente y ve Leyra</li>
+          <li><b>Tiempo:</b> sin fecha exacta. Hay cartas por correo, máquinas de escribir, tocadiscos y un Ford T: todo suena a mediados del siglo XX</li>
+          <li><b>Espacio:</b> un pueblo sin nombre de la provincia de Buenos Aires, el Instituto y la Casa Témpore</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="kicker">Cómo está armada</div>
+      <div class="box">
+        <h3>Las 4 partes y sus capítulos</h3>
+        <div id="bars"></div>
+        <p class="cap">Cada solapa de arriba resume una parte. La primera es casi la mitad del libro.</p>
+      </div>
+      <div class="box">
+        <h3>El año de Leyra, en orden</h3>
+        <ol class="steps">
+          <li><b>Verano:</b> la abuela manda los dibujos de Leyra al Instituto.</li>
+          <li><b>Abril:</b> llega la carta de aceptación, con caligrafía perfecta.</li>
+          <li><b>Primer cuatrimestre:</b> clases, reglas duras, amiga y enemiga.</li>
+          <li><b>La prueba Témpore:</b> concurso para ilustrar el nuevo libro.</li>
+          <li><b>Vacaciones de invierno:</b> Leyra trabaja en la Casa Témpore.</li>
+          <li><b>Fin del año escolar:</b> se resuelve el misterio y Leyra se despide.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="autor" data-t="El autor" hidden>
+  <div class="two">
+    <div>
+      <div class="kicker">Quién la escribió</div>
+      <h2>Pablo De Santis</h2>
+      <p class="lede">Nació en Buenos Aires en 1963, se recibió en Letras en la UBA y trabajó como periodista y guionista de historietas: fue jefe de redacción de la revista <i>Fierro</i>.</p>
+      <p>Escribe para adultos y para chicos. Ganó el Premio Planeta-Casa de América 2007 con <i>El enigma de París</i>. Entre sus libros juveniles más leídos en las escuelas están <i>El inventor de juegos</i>, <i>La sombra del dragón</i>, <i>Lucas Lenz y el Museo del Universo</i> y <i>El último espía</i>.</p>
+      <div class="box">
+        <h3>Su sello, y cómo aparece en <i>Leyra</i></h3>
+        <ul class="dots">
+          <li><b>Escuelas raras y cerradas:</b> el Instituto Témpore se parece al Colegio Possum de <i>El inventor de juegos</i>.</li>
+          <li><b>Oficios del papel:</b> calígrafos, ilustradores, escritores, tinteros. En sus novelas escribir y dibujar son casi actos mágicos.</li>
+          <li><b>Misterio con pistas:</b> como en un policial, los detalles chicos (una inicial bordada, una mancha) importan.</li>
+          <li><b>Lo extraño:</b> nunca queda del todo claro dónde termina lo real y empieza lo fantástico.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="plate">
+      <svg viewBox="0 0 400 400" role="img" aria-label="Ilustración: escritorio con tintero, pluma y hojas">
+        <rect width="400" height="400" rx="10" fill="#1a2044"/>
+        <rect x="0" y="270" width="400" height="130" fill="#3a2418"/><rect x="0" y="270" width="400" height="8" fill="#56362a"/>
+        <g transform="rotate(-8 170 250)"><rect x="70" y="150" width="200" height="140" fill="#f4f4f8"/><g stroke="#8a93c7" stroke-width="2"><path d="M90 180h150M90 200h130M90 220h150M90 240h110"/></g><text x="92" y="172" font-family="Pinyon Script" font-size="22" fill="#1f3a8a">Había una vez…</text></g>
+        <path d="M280 300 h60 v-40 c0-20-60-20-60 0Z" fill="#0d0f1c"/><ellipse cx="310" cy="262" rx="30" ry="8" fill="#1f3a8a"/>
+        <g transform="translate(318 258) rotate(-30)"><path d="M0 0 C14 -40 20 -90 4 -140 C-10 -90 -14 -40 0 0Z" fill="#ececf3"/><path d="M0 0 L4 -130" stroke="#9aa0c4" stroke-width="1.5"/></g>
+        <circle cx="80" cy="70" r="26" fill="#fbf4d6" opacity=".9"/>
+      </svg>
+      <div class="cap" style="color:#c9cde4;padding:0 6px">Ilustración original para esta guía.</div>
+    </div>
+  </div>
+</section>
+
+<section id="personajes" data-t="Personajes" hidden>
+  <div class="kicker">Quién es quién</div>
+  <h2>Los personajes</h2>
+  <p class="lede">Pensalos en tres grupos: quienes ayudan a Leyra, quienes la ponen a prueba y quienes esconden algo.</p>
+  <div id="chars"></div>
+</section>
+
+<section id="parte-1" data-t="I. La esgrima sutil" hidden>
+  <div class="two">
+    <div>
+      <div class="kicker">Primera parte · 21 capítulos</div>
+      <h2>La esgrima sutil</h2>
+      <p class="lede">Planteo inicial: Leyra entra al Instituto Témpore y aprende sus reglas, que parecen pensadas para que nadie se equivoque nunca.</p>
+      <ul class="dots">
+        <li>Leyra perdió a su mamá a los cinco años y no conoció a su papá. La crió su abuela Vera, que le enseñó a dibujar hasta darse cuenta de que la nena aprendía sola. Leyra copiaba, por ejemplo, las ilustraciones de las novelas de Julio Verne.</li>
+        <li>Como la escuela del pueblo llega solo hasta tercer año, Vera aprovecha una vacante y manda un sobre con los dibujos de su nieta. En abril llega la respuesta, escrita con letras azules perfectas y firmada por la directora, <b>Edith Lamarr</b>: Leyra fue aceptada.</li>
+        <li>El uniforme es negro, con una <b>capa roja</b> de segunda mano. Tiene bordadas unas iniciales, <b>MR</b>, y un rojo que ya no se fabrica: alguien la usó antes que ella.</li>
+        <li>A Leyra el colegio le parece una cárcel. Las profesoras no escriben en el pizarrón, rompen los trabajos con errores y no aceptan preguntas. Allí <i>cada trazo es definitivo</i>: no se puede borrar.</li>
+        <li>En la <b>sala de los retratos</b> hay cuadros de antiguas alumnas con marcas en la cara. Son las huellas de la <b>esgrima sutil</b>, un antiguo duelo con plumas y tinta entre alumnas.</li>
+        <li>Leyra se hace amiga de <b>Julia</b> y se gana el odio de <b>Bastiana Libra</b>. El conflicto estalla cuando las dos deben enfrentarse en la esgrima sutil.</li>
+        <li>La directora anuncia la <b>prueba Témpore</b>: la ganadora ilustrará el último libro de Gabriel Témpore y vivirá en su casa durante las vacaciones de invierno. Leyra y Bastiana compiten.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="plate">
+        <svg viewBox="0 0 400 420" role="img" aria-label="Ilustración: dos plumas cruzadas como espadas sobre un retrato marcado">
+          <rect width="400" height="420" rx="10" fill="#141834"/>
+          <rect x="110" y="60" width="180" height="230" rx="4" fill="#5a4120"/><rect x="122" y="72" width="156" height="206" fill="#262d5a"/>
+          <ellipse cx="200" cy="170" rx="48" ry="60" fill="#d9c0aa"/><path d="M152 150 C150 90 250 90 248 150 C240 115 160 115 152 150Z" fill="#2b1d16"/>
+          <path d="M150 278 C160 230 240 230 250 278Z" fill="#111"/>
+          <path d="M215 175 l14 0 M222 175 l0 18" stroke="#1f3a8a" stroke-width="4" stroke-linecap="round"/>
+          <g transform="translate(200 330)">
+            <g transform="rotate(-40)"><path d="M0 0 C16 -40 22 -100 6 -150 C-10 -100 -14 -40 0 0Z" fill="#eceef6"/><path d="M0 0 L5 -140" stroke="#8a93c7" stroke-width="1.5"/><path d="M-3 0 L0 26 3 0Z" fill="#1f3a8a"/></g>
+            <g transform="rotate(40)"><path d="M0 0 C16 -40 22 -100 6 -150 C-10 -100 -14 -40 0 0Z" fill="#f2dfe3"/><path d="M0 0 L5 -140" stroke="#c0485c" stroke-width="1.5"/><path d="M-3 0 L0 26 3 0Z" fill="#b0122c"/></g>
+          </g>
+          <circle cx="160" cy="392" r="6" fill="#1f3a8a"/><circle cx="240" cy="392" r="6" fill="#b0122c"/>
+        </svg>
+      </div>
+      <p class="cap">Retrato de una antigua alumna con su marca de tinta. Dos plumas cruzadas, como en un duelo.</p>
+      <div class="quote">«Para ellas era un día como todos. Para Leyra, algo único.»</div>
+    </div>
+  </div>
+</section>
+
+<section id="parte-2" data-t="II. El cisne blanco" hidden>
+  <div class="two">
+    <div>
+      <div class="kicker">Segunda parte · 12 capítulos</div>
+      <h2>El cisne blanco</h2>
+      <p class="lede">Leyra gana la prueba y se muda por el invierno a la Casa Témpore, al lado del colegio. Cambia el escenario y crece el misterio.</p>
+      <ul class="dots">
+        <li><b>El cisne</b> es el símbolo de la vieja fábrica de tintas y cuadernos de los Témpore, que fundaron el colegio. Leyra guarda una cartuchera de lata con ese cisne: era de su mamá, de cuando la fábrica regalaba útiles a los chicos del pueblo.</li>
+        <li>La mansión tiene un salón de los siervos, un lago artificial, un muelle con una cabaña y, entre los árboles, una <b>casa del árbol</b>.</li>
+        <li>Leyra conoce a <b>Gabriel Témpore</b>, nieto del fundador, autor de cuentos de "aire antiguo", y a <b>Javiera</b>, la prima que maneja la casa. Javiera le saca sangre a Gabriel noche tras noche y amenaza a Leyra.</li>
+        <li>También aparecen el jardinero <b>Kovak</b>, su esposa <b>Graciana</b>, la antigua ilustradora <b>Amalia Genta</b> y un nombre que se repite: <b>Regina Témpore</b>, la hermana de Gabriel. ¿Dónde está?</li>
+        <li>Leyra encuentra un viejo bote a pedales con forma de cisne, blanco descascarado y oxidado, y lo arregla con paciencia: lija las paletas y repone tornillos.</li>
+        <li>Bastiana vuelve a cruzarse en su camino.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="plate">
+        <svg viewBox="0 0 400 380" role="img" aria-label="Ilustración: bote con forma de cisne en un lago oscuro, con muelle y cabaña">
+          <rect width="400" height="380" rx="10" fill="#1a2044"/>
+          <circle cx="320" cy="70" r="30" fill="#fbf4d6"/>
+          <path d="M0 170 C80 120 160 150 240 125 C300 108 360 130 400 120 V200 H0Z" fill="#111531"/>
+          <rect x="0" y="195" width="400" height="185" fill="#0f1430"/>
+          <rect x="30" y="170" width="110" height="10" fill="#4a3220"/><g fill="#4a3220"><rect x="40" y="178" width="6" height="40"/><rect x="120" y="178" width="6" height="40"/></g>
+          <path d="M40 170 V130 l35-25 35 25 V170Z" fill="#251c35"/><rect x="66" y="140" width="16" height="18" fill="#ffd77a"/>
+          <g stroke="#2f3b7a" stroke-width="2"><path d="M30 250h80M200 300h150M60 330h90"/></g>
+          <g transform="translate(200 230)">
+            <path d="M-70 20 C-60 60 60 60 80 10 C50 22 0 22 -20 10Z" fill="#ececf2"/>
+            <path d="M-70 20 C-60 60 60 60 80 10" fill="none" stroke="#9aa0c4" stroke-width="2" stroke-dasharray="6 8"/>
+            <path d="M-20 12 C-30 -30 -10 -70 14 -66 C28 -64 28 -48 18 -46 C4 -42 2 -20 8 14Z" fill="#ececf2"/>
+            <path d="M18 -64 l18 6 -17 4Z" fill="#e05a2b"/><circle cx="12" cy="-58" r="2.5" fill="#111"/>
+            <rect x="30" y="4" width="22" height="8" rx="3" fill="#8a6a3a"/>
+            <ellipse cx="5" cy="58" rx="90" ry="6" fill="#fff" opacity=".1"/>
+          </g>
+        </svg>
+      </div>
+      <p class="cap">El bote-cisne del lago de la Casa Témpore, con su pintura blanca saltada.</p>
+    </div>
+  </div>
+</section>
+
+<section id="parte-3" data-t="III. La capa roja" hidden>
+  <div class="two">
+    <div>
+      <div class="kicker">Tercera parte · 10 capítulos</div>
+      <h2>La capa roja</h2>
+      <p class="lede">La tensión sube: Leyra vive dos situaciones de peligro. Alguien quiere asustarla para que se vaya de la casa.</p>
+      <ul class="dots">
+        <li>La capa roja que Leyra lleva desde el primer día vuelve al centro. Las iniciales <b>MR</b> y ese rojo antiguo que ya nadie fabrica empiezan a parecer pistas sobre su dueña anterior.</li>
+        <li>Leyra va reuniendo señales sueltas: una marca con forma de letra griega <b>gamma</b> en una mejilla, el monograma de un laboratorio, una mancha en un camisón.</li>
+        <li>Cada vez queda más claro que en la casa alguien no dice la verdad. Leyra tiene que leer los signos como lee un texto antes de dibujarlo.</li>
+      </ul>
+      <div class="box">
+        <h3>Para pensar mientras leés</h3>
+        <ul class="dots">
+          <li>¿Por qué son peligrosas para Leyra esas dos situaciones?</li>
+          <li>¿Para qué querrían asustarla?</li>
+          <li>¿Qué personajes están metidos? Pista: los capítulos 2, 4 y 5 de esta parte.</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="plate">
+        <svg viewBox="0 0 400 420" role="img" aria-label="Ilustración: una capa roja colgada frente a un espejo, con iniciales bordadas">
+          <rect width="400" height="420" rx="10" fill="#16193a"/>
+          <rect x="230" y="60" width="130" height="260" rx="65" fill="#5a4120"/><rect x="242" y="72" width="106" height="236" rx="53" fill="#2b3566"/>
+          <path d="M250 120 l80 160" stroke="#fff" stroke-width="6" opacity=".12"/>
+          <path d="M140 50 a14 14 0 1 1 14 14 v12" fill="none" stroke="#c7c9d8" stroke-width="4"/>
+          <path d="M154 76 L80 110 H228Z" fill="none" stroke="#c7c9d8" stroke-width="4"/>
+          <path d="M100 108 C90 200 70 300 50 380 H258 C238 300 218 200 208 108Z" fill="#b0122c"/>
+          <path d="M154 108 C150 220 140 320 150 380 H50 C70 300 90 200 100 108Z" fill="#8a0d22"/>
+          <path d="M100 108 C120 140 188 140 208 108" fill="none" stroke="#e0485f" stroke-width="5"/>
+          <text x="164" y="200" font-family="Pinyon Script" font-size="34" fill="#f3d27a">MR</text>
+          <path d="M60 380 H250" stroke="#000" stroke-opacity=".3" stroke-width="8"/>
+        </svg>
+      </div>
+      <p class="cap">La capa de segunda mano, con iniciales que no son las de Leyra.</p>
+    </div>
+  </div>
+</section>
+
+<section id="parte-4" data-t="IV. La casa del árbol" hidden>
+  <div class="two">
+    <div>
+      <div class="kicker">Cuarta parte · 10 capítulos</div>
+      <h2>La casa del árbol</h2>
+      <p class="lede">Desenlace. Todo lo que parecía raro empieza a encajar, y la casa del árbol guarda la clave.</p>
+      <p>Al principio de esta parte Leyra se reencuentra con varios personajes que la ayudan (pista: capítulos 1 y 3). Después se revela el secreto de los Témpore.</p>
+      <details class="spoiler">
+        <summary>Mostrar el final (¡contiene spoilers!)</summary>
+        <ul class="dots" style="margin-top:10px">
+          <li><b>Javiera es la madre de Bastiana.</b> Entre las dos iban debilitando a Gabriel Témpore para quedarse con los bienes de la familia.</li>
+          <li><b>Regina Témpore está muerta.</b> Era ella la verdadera autora de los cuentos que Gabriel publicaba. La que se escondía en la casa del árbol era Bastiana.</li>
+          <li>El último día de Leyra en la casa, Bastiana la ataca y las dos caen al lago. <b>Kovak, el jardinero, salva a Leyra.</b> Bastiana se ahoga y su cuerpo nunca aparece.</li>
+          <li>Leyra termina el año escolar y se despide de Gabriel, Kovak, Graciana y Aragón.</li>
+        </ul>
+        <p class="cap">Basado en resúmenes escolares de la novela; confirmalo con tu ejemplar.</p>
+      </details>
+    </div>
+    <div>
+      <div class="plate">
+        <svg viewBox="0 0 400 420" role="img" aria-label="Ilustración: casa del árbol iluminada junto al lago de noche">
+          <rect width="400" height="420" rx="10" fill="#181d3e"/>
+          <circle cx="80" cy="70" r="26" fill="#fbf4d6"/>
+          <rect x="0" y="330" width="400" height="90" fill="#0d1129"/><g stroke="#2f3b7a" stroke-width="2"><path d="M20 360h90M220 380h140M90 400h100"/></g>
+          <path d="M235 330 C240 250 230 180 236 120 h26 C268 180 258 250 266 330Z" fill="#3a2418"/>
+          <path d="M248 200 C200 190 170 170 150 150" stroke="#3a2418" stroke-width="12" fill="none"/>
+          <g fill="#152a22"><circle cx="250" cy="90" r="70"/><circle cx="190" cy="120" r="50"/><circle cx="315" cy="125" r="52"/><circle cx="160" cy="160" r="34"/></g>
+          <g fill="#1e3a2e"><circle cx="230" cy="70" r="40"/><circle cx="300" cy="100" r="30"/></g>
+          <rect x="190" y="150" width="120" height="10" fill="#5a3b26"/>
+          <path d="M200 150 V110 l50-30 50 30 V150Z" fill="#4a3220"/><path d="M192 112 l58-36 58 36" stroke="#2a1a10" stroke-width="8" fill="none"/>
+          <rect x="236" y="112" width="26" height="24" fill="#ffd77a"/><rect x="248" y="112" width="2" height="24" fill="#4a3220"/>
+          <g stroke="#7a5a3a" stroke-width="3"><path d="M210 160 V330M226 160 V330"/><path d="M210 190h16M210 220h16M210 250h16M210 280h16M210 310h16"/></g>
+          <rect x="236" y="340" width="26" height="40" fill="#ffd77a" opacity=".12"/>
+        </svg>
+      </div>
+      <p class="cap">La casa del árbol de la Casa Témpore: alguien vive ahí escondido.</p>
+    </div>
+  </div>
+</section>
+
+<section id="lugares" data-t="Mapa de lugares" hidden>
+  <div class="kicker">Por dónde se mueve Leyra</div>
+  <h2>Un recorrido cada vez más oscuro</h2>
+  <p class="lede">Del pueblo abierto al colegio cerrado, y de ahí a una mansión con lago. Cada espacio es más misterioso que el anterior.</p>
+  <div class="plate" style="margin-bottom:16px">
+    <svg viewBox="0 0 900 320" role="img" aria-label="Mapa: pueblo, Instituto Témpore con la fábrica de tintas, y Casa Témpore con lago y casa del árbol">
+      <rect width="900" height="320" rx="10" fill="#1a2044"/>
+      <path d="M150 170 C250 120 330 210 430 160 S620 130 700 170" stroke="#c9cde4" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" fill="none"/>
+      <text x="270" y="140" font-family="Spectral" font-size="15" fill="#c9cde4">2 km</text>
+      <g transform="translate(60 120)"><rect x="0" y="40" width="40" height="40" fill="#3a4688"/><rect x="50" y="25" width="50" height="55" fill="#2e3970"/><path d="M45 25 l30-25 30 25Z" fill="#2e3970"/><circle cx="20" cy="95" r="22" fill="none" stroke="#5aa06f" stroke-width="3" stroke-dasharray="4 5"/></g>
+      <text x="40" y="250" font-family="Cormorant" font-weight="700" font-size="24" fill="#fff">El pueblo</text>
+      <text x="40" y="274" font-family="Spectral" font-size="14" fill="#c9cde4">plaza, confitería Las dos águilas,</text>
+      <text x="40" y="292" font-family="Spectral" font-size="14" fill="#c9cde4">casa de la abuela entre cardos</text>
+      <g transform="translate(380 90)"><rect x="0" y="30" width="110" height="70" fill="#2e3970"/><path d="M-6 32 l61-32 61 32Z" fill="#232c5c"/><g fill="#ffd77a"><rect x="14" y="48" width="10" height="16"/><rect x="50" y="48" width="10" height="16"/><rect x="86" y="48" width="10" height="16"/></g><rect x="120" y="50" width="50" height="50" fill="#3a2a2a"/><rect x="150" y="10" width="12" height="40" fill="#3a2a2a"/><path d="M165 50 l8-12" stroke="#666" stroke-width="3"/></g>
+      <text x="360" y="230" font-family="Cormorant" font-weight="700" font-size="24" fill="#fff">Instituto Témpore</text>
+      <text x="360" y="254" font-family="Spectral" font-size="14" fill="#c9cde4">aula magna, sala de los retratos,</text>
+      <text x="360" y="272" font-family="Spectral" font-size="14" fill="#c9cde4">galería de columnas, jardín con estatuas;</text>
+      <text x="360" y="290" font-family="Spectral" font-size="14" fill="#c9cde4">al lado, la fábrica de tintas en ruinas</text>
+      <g transform="translate(690 70)"><ellipse cx="80" cy="120" rx="90" ry="28" fill="#0f1430"/><rect x="10" y="40" width="80" height="60" fill="#3a2e4e"/><path d="M4 42 l46-30 46 30Z" fill="#2c2340"/><circle cx="150" cy="60" r="30" fill="#1e3a2e"/><rect x="134" y="52" width="30" height="16" fill="#5a3b26"/><path d="M70 120 c8 -14 20 -14 22 -4" stroke="#eee" stroke-width="4" fill="none"/></g>
+      <text x="690" y="230" font-family="Cormorant" font-weight="700" font-size="24" fill="#fff">Casa Témpore</text>
+      <text x="690" y="254" font-family="Spectral" font-size="14" fill="#c9cde4">salón de los siervos, muelle,</text>
+      <text x="690" y="272" font-family="Spectral" font-size="14" fill="#c9cde4">cabaña, lago artificial</text>
+      <text x="690" y="290" font-family="Spectral" font-size="14" fill="#c9cde4">y casa del árbol</text>
+    </svg>
+  </div>
+  <p class="cap">Esquema orientativo dibujado para esta guía: la novela nunca nombra el pueblo.</p>
+</section>
+
+<section id="temas" data-t="Temas y símbolos" hidden>
+  <div class="kicker">Para ir más allá de la trama</div>
+  <h2>Temas y símbolos</h2>
+  <p class="lede">En <i>Leyra</i> los objetos cuentan tanto como los personajes. Si aprendés a leerlos, la novela se vuelve un juego de pistas.</p>
+  <div class="grid" id="symbols"></div>
+  <div class="box" style="margin-top:16px">
+    <h3>Grandes temas</h3>
+    <ul class="dots">
+      <li><b>Crecer:</b> es una novela de aprendizaje. Leyra llega asustada y termina enfrentando sola un peligro real.</li>
+      <li><b>El talento y la envidia:</b> destacarse le trae admiración y también enemigas.</li>
+      <li><b>Leer, escribir y dibujar:</b> para ilustrar hay que leer primero. Lápiz, tinta y papel valen mucho, y no hay pantallas ni celulares.</li>
+      <li><b>Las apariencias engañan:</b> el autor famoso no escribe sus cuentos y la casa más elegante esconde un crimen.</li>
+      <li><b>La familia:</b> la abuela que lucha por Leyra contra una familia que se destruye por dinero.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="repaso" data-t="Autoevaluación" hidden>
+  <div class="kicker">Ponete a prueba</div>
+  <h2>¿Cuánto recordás de <i>Leyra</i>?</h2>
+  <p class="lede">Elegí una opción en cada pregunta. Enseguida vas a ver si acertaste y por qué.</p>
+  <div id="quiz"></div>
+  <p id="score" aria-live="polite"></p>
+  <button class="btn" id="reset" type="button">Empezar de nuevo</button>
+  <div class="box" style="margin-top:22px">
+    <h3>Tips para leer una novela larga</h3>
+    <ul class="dots">
+      <li>Armá una lista de personajes en la primera página de tu carpeta y completala a medida que aparecen.</li>
+      <li>Al terminar cada parte escribí tres líneas: qué pasó, qué cambió y qué misterio quedó abierto.</li>
+      <li>Subrayá las pistas (iniciales, marcas, objetos). En un misterio nada está de adorno.</li>
+      <li>Leé de a 3 o 4 capítulos por día: con 53 capítulos, en unas dos semanas lo terminás sin apuro.</li>
+    </ul>
+  </div>
+</section>
+
+</div></main>
+
+<footer class="band"><div class="wrap">Guía de lectura de <i>Leyra</i> (Pablo De Santis, Santillana/Loqueleo, 2018). Las ilustraciones son originales de esta guía, no del libro.</div></footer>
+
+<script>
+{
+const parts=[["I. La esgrima sutil",21],["II. El cisne blanco",12],["III. La capa roja",10],["IV. La casa del árbol",10]];
+document.getElementById('bars').innerHTML=parts.map(([n,c])=>`<div class="bar"><span>${n}</span><i style="width:${c/21*100}%"></i><span>${c}</span></div>`).join('');
+
+const col={ally:'#1f8a4c',test:'#b0122c',mys:'#1f3a8a'};
+const chars=[
+ ['Quienes ayudan a Leyra','ally',[
+  ['Leyra Simonides','Protagonista','Tiene 14 años y un talento enorme para dibujar. Es curiosa, terca y valiente, aunque al principio no quiere ir al Instituto.','L'],
+  ['Vera Simonides','Su abuela','La crió y la empuja a estudiar: manda sus dibujos al Instituto sin que Leyra quiera.','V'],
+  ['Julia','Su mejor amiga','Compañera del Instituto; comparte con Leyra las injusticias de las clases.','J'],
+  ['Kovak','Jardinero de la Casa Témpore','Parece hosco, pero termina siendo clave para salvar a Leyra.','K'],
+  ['Graciana','Esposa de Kovak','Vive y trabaja en la casa; parte del grupo que Leyra extrañará.','G'],
+  ['Aragón','Portero del Instituto','Una presencia silenciosa que acompaña a Leyra.','A']]],
+ ['Quienes la ponen a prueba','test',[
+  ['Bastiana Libra','La rival','Compañera de uñas largas y filosas; se vuelve la enemiga mortal de Leyra.','B'],
+  ['Edith Lamarr','La directora','Exigente, siempre vigilando. Firma la carta de aceptación con caligrafía perfecta.','E'],
+  ['Las profesoras','Instituto Témpore','Arbitrarias y severas: rompen los trabajos con errores y no permiten borrar.','P']]],
+ ['Quienes esconden algo','mys',[
+  ['Gabriel Témpore','El escritor','Nieto del fundador del colegio y de la fábrica de tintas. Sus cuentos tienen un aire antiguo.','G'],
+  ['Javiera','Prima y encargada de la casa','Le saca sangre a Gabriel cada noche y amenaza a Leyra.','J'],
+  ['Regina Témpore','La hermana ausente','Todos la nombran, nadie la ve. Su historia es la clave del misterio.','R'],
+  ['Amalia Genta','La ilustradora anterior','Ilustró antes los cuentos de Témpore. ¿Qué le pasó?','A']]]
+];
+const mono=(l,c)=>`<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="${c}"/><circle cx="32" cy="32" r="25" fill="none" stroke="#fff" stroke-opacity=".5"/><text x="32" y="44" text-anchor="middle" font-family="Pinyon Script" font-size="34" fill="#fff">${l}</text></svg>`;
+document.getElementById('chars').innerHTML=chars.map(([g,k,list])=>`<div class="group">${g}</div><div class="grid">${list.map(([n,r,d,l])=>`<div class="card">${mono(l,col[k])}<div><b>${n}</b><small>${r}</small><p>${d}</p></div></div>`).join('')}</div>`).join('');
+
+const sym=[
+ ['El cisne','Logo de la fábrica de tintas Témpore y del bote del lago. Representa la belleza del arte, pero también un esplendor que ya pasó.','<path d="M14 44 C20 56 48 56 54 42 C46 46 32 44 26 38Z" fill="#fff"/><path d="M26 40 C22 26 28 12 38 13 C44 14 44 20 39 21 C33 22 32 30 34 42Z" fill="#fff"/><path d="M42 14 l8 3 -8 2Z" fill="#e05a2b"/>'],
+ ['La capa roja','Parte del uniforme, heredada de otra alumna. El rojo marca a Leyra y recuerda a Caperucita: una chica que entra al bosque del lobo.','<path d="M32 12 L20 18 C18 34 14 46 10 54 H54 C50 46 46 34 44 18Z" fill="#e0485f"/>'],
+ ['La tinta','Todo trazo es definitivo. Equivocarse deja marca, como las cicatrices de los retratos.','<path d="M22 50 h20 v-12 c0-8-20-8-20 0Z" fill="#fff"/><path d="M32 12 C40 24 40 30 32 34 C24 30 24 24 32 12Z" fill="#8fa8ff"/>'],
+ ['La caligrafía','Letras perfectas que esconden significados: la carta de aceptación brilla tanto que cuesta leerla.','<text x="32" y="44" text-anchor="middle" font-family="Pinyon Script" font-size="36" fill="#fff">Aa</text>'],
+ ['Las marcas en la cara','Signos de la esgrima sutil. Muestran que en el Instituto la competencia deja huellas.','<circle cx="32" cy="32" r="20" fill="#f1d3bd"/><path d="M36 30 h8 M40 30 v10" stroke="#1f3a8a" stroke-width="3" stroke-linecap="round"/>'],
+ ['La casa del árbol','Un lugar de juego infantil convertido en escondite. Allí se resuelve el secreto.','<path d="M30 56 V30 h4 V56Z" fill="#a07850"/><circle cx="32" cy="22" r="16" fill="#3e7a5e"/><path d="M22 30 V22 l10-6 10 6 V30Z" fill="#a07850"/>']
+];
+document.getElementById('symbols').innerHTML=sym.map(([n,d,g])=>`<div class="card"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#1d2340"/>${g}</svg><div><b>${n}</b><p>${d}</p></div></div>`).join('');
+
+const qs=[
+ ['¿Por qué Leyra tiene que cambiar de escuela?',['Porque la echaron','Porque la escuela del pueblo termina en tercer año','Porque se mudó a la ciudad'],1,'En su pueblo el único lugar para seguir estudiando es el Instituto Témpore.'],
+ ['¿Quién manda los dibujos de Leyra al Instituto?',['Su abuela Vera','Julia','La propia Leyra'],0,'Vera lo hace casi contra la voluntad de su nieta.'],
+ ['¿De qué era la fábrica de los Témpore?',['De pinceles','De barcos','De tintas y cuadernos'],2,'Su símbolo era un cisne, que aparece en la cartuchera de la mamá de Leyra.'],
+ ['¿Qué tiene de raro la capa roja de Leyra?',['Es nueva y brillante','Es usada, con las iniciales MR y un rojo que ya no se fabrica','Es de su mamá'],1,'Perteneció antes a otra alumna: una pista que crece en la tercera parte.'],
+ ['¿Qué gana Leyra con la prueba Témpore?',['Una beca para la universidad','Ilustrar el último libro de Gabriel Témpore','Un viaje a la ciudad'],1,'Por eso pasa las vacaciones de invierno en la Casa Témpore.'],
+ ['¿Cómo se llama la cuarta parte de la novela?',['La casa del árbol','El cisne blanco','La esgrima sutil'],0,'Las partes son: La esgrima sutil, El cisne blanco, La capa roja y La casa del árbol.']
+];
+const quiz=document.getElementById('quiz'),score=document.getElementById('score');
+let right=0,done=0;
+const draw=()=>{right=0;done=0;score.textContent='';
+ quiz.innerHTML=qs.map(([p,o],i)=>`<div class="q" data-i="${i}"><p>${i+1}. ${p}</p>${o.map((t,j)=>`<button class="opt" type="button" data-j="${j}">${t}</button>`).join('')}<div class="fb"></div></div>`).join('');};
+quiz.addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;const q=b.closest('.q');if(q.dataset.done)return;
+ const [,,ok,why]=qs[+q.dataset.i];q.dataset.done=1;done++;
+ q.querySelectorAll('.opt').forEach((x,j)=>{if(j===ok)x.classList.add('ok');});
+ if(+b.dataset.j===ok){right++;q.querySelector('.fb').textContent='¡Bien! '+why;}else{b.classList.add('no');q.querySelector('.fb').textContent='Casi. '+why;}
+ if(done===qs.length)score.textContent=`Resultado: ${right} de ${qs.length}`+(right>=5?' · ¡Excelente lectura!':right>=3?' · Vas bien, repasá las solapas.':' · Volvé a leer los resúmenes y probá otra vez.');});
+document.getElementById('reset').addEventListener('click',draw);
+draw();
+
+const secs=[...document.querySelectorAll('main section')],tabs=document.getElementById('tabs');
+tabs.innerHTML=secs.map(s=>`<button role="tab" type="button" id="t-${s.id}" aria-controls="${s.id}">${s.dataset.t}</button>`).join('');
+const show=id=>{if(!secs.some(s=>s.id===id))id='inicio';
+ secs.forEach(s=>s.hidden=s.id!==id);
+ tabs.querySelectorAll('button').forEach(b=>{const on=b.id==='t-'+id;b.setAttribute('aria-selected',on);if(on)b.scrollIntoView({block:'nearest',inline:'nearest'});});};
+tabs.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const id=b.id.slice(2);
+ if(location.hash!=='#'+id)location.hash=id;else show(id);
+ const n=document.querySelector('nav');window.scrollTo({top:n.offsetTop,behavior:'smooth'});});
+tabs.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft'].includes(e.key))return;const bs=[...tabs.querySelectorAll('button')],i=bs.indexOf(document.activeElement);if(i<0)return;const n=bs[(i+(e.key==='ArrowRight'?1:-1)+bs.length)%bs.length];n.focus();n.click();});
+window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
+show(location.hash.slice(1));
+}
+</script>
+</body>
+</html>
