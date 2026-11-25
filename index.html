@@ -8,47 +8,83 @@
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant:wght@500;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 /* VOICE: misterio gótico escolar, contado claro para chicos de 12-13 años
-   IDEA: un cuaderno de caligrafía del Instituto Témpore, tinta y lacre
-   PICTURE: escenas en tinta (instituto, cisne, capa roja, casa del árbol) dibujadas en SVG
-   COLOUR and TYPE: tinta azul-negra, papel blanco, rojo capa; Pinyon Script + Cormorant + Spectral
-   LAYOUT: portada-escena, solapas por capítulo, cada parte con su lámina */
+   IDEA: un cuaderno de caligrafía del Instituto Témpore, tinta negra y capa roja (como la tapa)
+   PICTURE: la portada real del libro + láminas en tinta (instituto, cisne, capa, casa del árbol)
+   COLOUR and TYPE: carbón y tinta, papel blanco, rojo capa; Pinyon Script + Cormorant + Spectral
+   LAYOUT: portada, solapas por parte, resúmenes por momentos, examen imprimible */
 :root{color-scheme:light dark;
---bg:light-dark(#fbfbfd,#0f1119);--paper:light-dark(#ffffff,#171a26);--ink:light-dark(#151826,#e9eaf2);
---soft:light-dark(#5b6075,#a6abc0);--line:light-dark(#dcdfe8,#2b3042);--red:light-dark(#b0122c,#ff5a72);
---blue:light-dark(#1f3a8a,#8fa8ff);--deep:#121626;--deep2:#1d2340}
+--bg:light-dark(#fbfbfc,#111114);--paper:light-dark(#ffffff,#1a1a1f);--ink:light-dark(#17171c,#ececf0);
+--soft:light-dark(#5c5c68,#a9a9b6);--line:light-dark(#dedee5,#2e2e37);--red:light-dark(#b30f2c,#ff5c74);
+--blue:light-dark(#1f3a8a,#93aaff);--deep:#141418;--deep2:#2a2a30}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Spectral,Georgia,serif;overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.62 Spectral,Georgia,serif;overflow-x:clip}
 h1,h2,h3{font-family:Cormorant,Georgia,serif;line-height:1.08;text-wrap:balance;margin:0 0 .4em}
 h2{font-size:clamp(32px,4.4vw,48px)}h3{font-size:24px}
-p{max-width:68ch;margin:0 0 1em}
+p{max-width:70ch;margin:0 0 1em}
 a{color:var(--blue)}
 .band{padding:clamp(28px,4vw,60px) max(5vw,16px)}
 .wrap{max-width:1180px;margin:0 auto}
 /* portada */
-.hero{background:radial-gradient(120% 90% at 75% 10%,#2b3566 0,var(--deep2) 40%,var(--deep) 100%);color:#eef0f8}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(20px,4vw,56px);align-items:center}
-.logo{font-family:"Pinyon Script",cursive;font-size:clamp(84px,13vw,150px);line-height:.9;margin:0;font-weight:400}
-.by{font-family:Cormorant,serif;font-size:24px;margin:.2em 0 1em;color:#c9cde4}
-.hero p{color:#d7daea}
+.hero{background:radial-gradient(90% 80% at 72% 30%,#3b3b42 0,var(--deep2) 35%,var(--deep) 100%);color:#efeff3}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,5vw,64px);align-items:center}
+.logo{font-family:"Pinyon Script",cursive;font-size:clamp(84px,13vw,150px);line-height:.9;margin:0;font-weight:400;color:#e0243f}
+.by{font-family:Cormorant,serif;font-size:24px;margin:.2em 0 1em;color:#d0d0d8}
+.hero p{color:#dadae2}
 .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-.facts span{border:1px solid #4a5384;border-radius:99px;padding:5px 13px;font-size:14px;color:#dfe2f3}
-.scene{width:100%;height:auto;display:block;filter:drop-shadow(0 18px 30px #0008)}
-/* solapas */
-nav{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
-.tabs{display:flex;gap:4px;overflow-x:auto;max-width:1180px;margin:0 auto;padding:8px max(5vw,16px);scrollbar-width:thin}
-.tabs button{flex:none;font:600 15px Spectral,serif;color:var(--soft);background:none;border:0;border-bottom:3px solid transparent;padding:10px 12px;min-height:44px;cursor:pointer}
-.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--red)}
+.facts span{border:1px solid #55555f;border-radius:99px;padding:5px 13px;font-size:14px;color:#e4e4ea}
+.cover{justify-self:center;width:min(100%,360px);position:relative}
+.cover img{display:block;width:100%;height:auto;border-radius:3px 8px 8px 3px;box-shadow:-6px 0 0 #0006 inset,0 30px 60px #000c,0 6px 14px #0008;transform:rotate(2deg)}
+.cover::after{content:"";position:absolute;inset:0;border-radius:3px 8px 8px 3px;background:linear-gradient(90deg,#0005 0,#fff2 2%,transparent 6%);transform:rotate(2deg);pointer-events:none}
+.cover figcaption{text-align:center;font-size:13px;color:#a9a9b6;margin-top:18px}
+/* índice vertical: la guarda interior del libro */
+.book{display:grid;grid-template-columns:300px minmax(0,1fr);align-items:start}
+.book>main{padding-inline:max(4vw,16px)}
+nav.toc{position:sticky;top:0;height:100vh;overflow-y:auto;z-index:5;color:#ececf0;
+ background:
+  radial-gradient(160px 160px at 85% 18%,#ffffff0d,transparent 70%),
+  radial-gradient(220px 220px at 10% 85%,#ffffff0a,transparent 70%),
+  linear-gradient(160deg,#26262c,#141418 60%,#0e0e11);
+ box-shadow:inset -14px 0 18px -10px #000c,inset -2px 0 0 #000;padding:28px 22px 32px 26px}
+nav.toc::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cg fill='none' stroke='%23000' stroke-opacity='.55'%3E%3Ccircle cx='150' cy='150' r='110' stroke-width='22'/%3E%3Ccircle cx='170' cy='140' r='70' stroke-width='9'/%3E%3Ccircle cx='130' cy='170' r='128' stroke-width='3'/%3E%3C/g%3E%3C/svg%3E") center 40%/260px no-repeat}
+.toc>*{position:relative}
+.toc .ex-libris{border:1px solid #ffffff2e;border-radius:4px;padding:14px 12px 10px;text-align:center;margin-bottom:22px}
+.toc .ex-libris b{display:block;font:400 54px/0.9 "Pinyon Script",cursive;color:#e0243f}
+.toc .ex-libris span{font:600 13px Spectral,serif;color:#b9b9c4}
+.toc h2{font:400 34px/1 "Pinyon Script",cursive;color:#fff;margin:0 0 6px}
+.toc .grp{font:600 12px Spectral,serif;color:#e0243f;margin:18px 0 4px;letter-spacing:.02em}
+.tabs{display:flex;flex-direction:column;gap:0}
+.tabs button{display:grid;grid-template-columns:30px minmax(0,auto) 1fr;align-items:baseline;gap:8px;width:100%;text-align:left;
+ font:500 17px Cormorant,Georgia,serif;color:#d6d6de;background:none;border:0;border-radius:4px;padding:9px 10px 9px 6px;min-height:44px;cursor:pointer;position:relative}
+.tabs button .n{font:600 13px Spectral,serif;color:#8d8d99;text-align:right}
+.tabs button .dots{border-bottom:1px dotted #ffffff40;height:1px;align-self:center;transform:translateY(4px)}
+.tabs button:hover{background:#ffffff0d;color:#fff}
+.tabs button[aria-selected=true]{color:#fff;font-weight:700;background:#ffffff12}
+.tabs button[aria-selected=true] .n{color:#ff6b80}
+.tabs button[aria-selected=true]::after{content:"";position:absolute;right:-22px;top:2px;bottom:2px;width:14px;background:#c4122f;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,45% 50%);box-shadow:0 2px 4px #0008}
+.toc .foot{font-size:12px;color:#8d8d99;margin-top:22px;font-style:italic}
 .tabs button:focus-visible,.btn:focus-visible,.opt:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+@media(max-width:900px){
+ .book{grid-template-columns:minmax(0,1fr)}
+ nav.toc{position:static;height:auto;box-shadow:inset 0 -10px 16px -10px #000c;padding:22px max(5vw,16px)}
+ .toc .ex-libris{display:none}
+ .tabs button[aria-selected=true]::after{right:-6px}
+}
 section[hidden]{display:none}
 .lede{font-size:19px;color:var(--soft)}
-.two{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:start}
+.two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:start}
+.side{position:sticky;top:80px}
 .plate{background:var(--deep);border-radius:14px;padding:10px;box-shadow:0 10px 30px #0002}
 .plate svg{width:100%;height:auto;display:block}
 .cap{font-size:14px;color:var(--soft);margin-top:8px;font-style:italic}
 .kicker{font-family:Cormorant,serif;font-size:20px;color:var(--red);font-weight:700;margin-bottom:4px}
 .box{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:0 0 16px}
 .box h3{margin-bottom:.3em}
+.mom{border-left:3px solid var(--red);padding:2px 0 2px 18px;margin:0 0 22px}
+.mom h3{font-size:23px;margin-bottom:.25em}
+.mom h3 span{font-family:Spectral,serif;font-size:14px;color:var(--red);font-weight:600;display:block;margin-bottom:2px}
+.mom p{margin-bottom:.6em}
 ul.dots{padding-left:1.1em;margin:0 0 1em}ul.dots li{margin:.3em 0}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;grid-template-columns:64px minmax(0,1fr);gap:14px;align-items:start}
@@ -66,19 +102,91 @@ ul.dots{padding-left:1.1em;margin:0 0 1em}ul.dots li{margin:.3em 0}
 .bar{display:grid;grid-template-columns:150px minmax(0,1fr) 40px;gap:10px;align-items:center;margin:8px 0;font-size:15px}
 .bar i{display:block;height:16px;border-radius:4px;background:var(--red)}
 .bar span:last-child{text-align:right;font-variant-numeric:tabular-nums}
-details.spoiler{border:2px dashed var(--red);border-radius:12px;padding:12px 18px;background:var(--paper)}
+details.spoiler{border:2px dashed var(--red);border-radius:12px;padding:12px 18px;background:var(--paper);margin-bottom:16px}
 details.spoiler summary{cursor:pointer;font-weight:600;color:var(--red);min-height:32px}
 .btn{font:600 16px Spectral,serif;background:var(--red);color:#fff;border:0;border-radius:8px;padding:10px 18px;min-height:44px;cursor:pointer}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
 .q{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
 .q p{font-weight:600;margin-bottom:8px}
 .opt{display:block;width:100%;text-align:left;font:16px Spectral,serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 0;min-height:44px;cursor:pointer}
 .opt.ok{border-color:#1f8a4c;background:light-dark(#e7f6ec,#143524)}.opt.no{border-color:var(--red);background:light-dark(#fbe9ec,#3a1520)}
 .fb{font-size:15px;color:var(--soft);min-height:1.4em}
 #score{font-family:Cormorant,serif;font-size:28px}
+/* examen */
+.exam{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:clamp(18px,4vw,48px);max-width:900px;margin:0 auto}
+.exhead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;border-bottom:3px double var(--ink);padding-bottom:14px;margin-bottom:18px}
+.exhead h3{font-size:28px;margin:0}
+.exhead .meta{font-size:15px;color:var(--soft)}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 20px;margin:12px 0 4px;font-size:15px}
+.fields label{display:grid;gap:4px;font-weight:600}
+.exam input,.exam select,.exam textarea{font:16px Spectral,Georgia,serif;color:var(--ink);background:var(--bg);border:1px solid light-dark(#b9bcc8,#454552);border-radius:8px;padding:9px 11px;min-height:44px;width:100%}
+.exam select{width:auto;max-width:100%;cursor:pointer}
+.exam textarea{resize:vertical;line-height:1.5;margin-top:6px}
+.exam input:focus-visible,.exam select:focus-visible,.exam textarea:focus-visible{outline:3px solid var(--blue);outline-offset:1px}
+.it .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.it .row span{flex:1 1 260px}
+.it .who{flex:0 0 160px;font-weight:600}
+.it .corr{margin-top:6px;font-size:15px}
+.it>select{margin-top:6px}
+.it .res{font-size:15px;margin-top:4px;min-height:0}
+.it.ok select{border-color:#1f8a4c;background:light-dark(#e7f6ec,#143524)}.it.ok .res{color:#1f8a4c}
+.it.no select{border-color:var(--red);background:light-dark(#fbe9ec,#3a1520)}.it.no .res{color:var(--red)}
+.res.model{color:var(--soft);background:light-dark(#f3f4f8,#202028);border-radius:8px;padding:8px 12px}
+.result{margin-top:28px;border:2px solid var(--red);border-radius:12px;padding:18px 20px}
+.result h4{font:700 20px Cormorant,serif;margin:0 0 10px}
+.result .rows div{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line)}
+.result .rows b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.result .tot{font-size:19px;border-bottom:0!important}
+.result .warn{color:var(--red);font-weight:600}
+.nota small{display:block;color:var(--soft)}
+.prog-top{display:flex;justify-content:space-between;gap:12px;font-size:18px;margin-bottom:8px}
+.track{height:14px;border-radius:99px;background:var(--line);overflow:hidden}.track i{display:block;height:100%;width:0;background:var(--red);transition:width .3s}
+.prog-parts{margin-top:12px}
+.lb-part{margin:30px 0}
+.lb-head{display:flex;justify-content:space-between;align-items:end;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:8px}
+.lb-head h3{font-size:30px;margin:0}.lb-count{font-variant-numeric:tabular-nums;color:var(--soft);white-space:nowrap}
+.chaps{list-style:none;padding:0;margin:0}
+.chap{display:grid;grid-template-columns:150px minmax(0,1fr);gap:4px 16px;align-items:start;padding:10px 0;border-bottom:1px solid var(--line)}
+.chap details{grid-column:2}
+.chk{display:flex;align-items:center;gap:10px;min-height:44px;cursor:pointer;font-weight:600}
+.chk input{width:22px;height:22px;accent-color:#b30f2c}
+.chap.done .chk span{color:var(--red)}
+.guide{padding-top:10px}.guide.muted{color:var(--soft);font-size:15px}
+.chap summary{cursor:pointer;font-size:15px;color:var(--blue);min-height:32px;display:flex;align-items:center}
+.chap textarea{width:100%;font:16px Spectral,serif;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 10px;resize:vertical}
+@media(max-width:600px){.chap{grid-template-columns:minmax(0,1fr)}.chap details{grid-column:1}.guide{padding-top:0}}
+.tabs #t-examen{color:#ff6b80}
+.nota{border:2px solid var(--ink);border-radius:6px;padding:8px 14px;text-align:center;font-size:14px;align-self:start}
+.nota b{display:block;font-size:30px;font-family:Cormorant,serif;min-width:70px}
+.ex{margin:26px 0 0}
+.ex h4{font:700 19px Spectral,serif;margin:0 0 6px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ex h4 em{font-style:normal;color:var(--red);white-space:nowrap}
+.ex .ins{font-style:italic;color:var(--soft);margin-bottom:10px}
+.ex ol{margin:0;padding-left:1.5em}.ex li{margin:.55em 0}
+.ex ol.abc{list-style:lower-alpha}
+.ex .ch{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:16px;margin-top:2px}
+.lines{display:block;height:58px;background:repeating-linear-gradient(transparent 0 27px,var(--line) 27px 28px);margin-top:4px}
+.lines.l4{height:116px}.lines.l8{height:232px}
+.vf{display:inline-block;min-width:44px;border-bottom:1px solid var(--ink);margin-right:8px}
+.match{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:6px 24px;font-size:16px}
+.match div{padding:4px 0;border-bottom:1px dotted var(--line)}
+.crit{width:100%;border-collapse:collapse;font-size:15px;margin-top:8px}
+.crit td,.crit th{border:1px solid var(--line);padding:6px 10px;text-align:left}.crit td:last-child,.crit th:last-child{text-align:right;white-space:nowrap}
+.key{margin-top:30px}
+.key ol{padding-left:1.4em}.key li{margin:.3em 0}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin:0 auto 16px;max-width:900px}
 footer{border-top:1px solid var(--line);color:var(--soft);font-size:14px}
 @media (prefers-reduced-motion:no-preference){section:not([hidden]){animation:in .45s ease}@keyframes in{from{opacity:0;transform:translateY(8px)}}}
-@media(max-width:820px){.hero .wrap,.two{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:600px){.bar{grid-template-columns:110px minmax(0,1fr) 32px}.card{grid-template-columns:48px minmax(0,1fr)}.card svg{width:48px;height:48px}}
+@media(max-width:900px){.side{position:static}}
+@media(max-width:820px){.hero .wrap,.two{grid-template-columns:minmax(0,1fr)}.cover{width:min(80%,320px)}}
+@media(max-width:600px){.bar{grid-template-columns:110px minmax(0,1fr) 32px}.card{grid-template-columns:48px minmax(0,1fr)}.card svg{width:48px;height:48px}.match{grid-template-columns:minmax(0,1fr)}.exhead{grid-template-columns:minmax(0,1fr)}}
+@media print{
+ header,nav,footer,.tools,main section:not(#examen){display:none!important}
+ #examen{display:block!important}#examen>.kicker,#examen>h2,#examen>.lede{display:none}
+ body{background:#fff;color:#000;font-size:12pt}.band{padding:0}.book{display:block}
+ .exam{border:0;padding:0;max-width:none}.key{break-before:page}.key[data-hide]{display:none}
+ .ex{break-inside:avoid-page}
+}
 </style>
 </head>
 <body>
@@ -90,57 +198,21 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:14px}
       <div class="by">una novela de Pablo De Santis · guía ilustrada de lectura</div>
       <p>Una chica de catorce años que dibuja mejor que nadie entra a un colegio de señoritas donde cada trazo de tinta es definitivo. Detrás de las aulas hay una fábrica de tintas en ruinas, una mansión junto a un lago y un secreto que alguien quiere esconder a cualquier precio.</p>
       <div class="facts"><span>Santillana / Loqueleo, 2018</span><span>4 partes · 53 capítulos</span><span>Novela juvenil de misterio gótico</span></div>
-      <p style="margin-top:18px;font-size:15px">¿Querés ver la tapa original? <a style="color:#aebfff" href="https://www.goodreads.com/book/show/38472696-leyra">Abrila en Goodreads</a>.</p>
     </div>
-    <svg class="scene" viewBox="0 0 600 470" role="img" aria-label="Ilustración: el Instituto Témpore de noche, con una chica de capa roja y un cisne en el lago">
-      <defs>
-        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26306a"/><stop offset="1" stop-color="#0e1124"/></linearGradient>
-        <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2450"/><stop offset="1" stop-color="#090b18"/></linearGradient>
-        <radialGradient id="moon"><stop offset="0" stop-color="#fffbe8"/><stop offset=".6" stop-color="#f3ecc8"/><stop offset="1" stop-color="#f3ecc8" stop-opacity="0"/></radialGradient>
-        <g id="win"><rect width="16" height="26" rx="8" fill="#ffd77a"/><rect x="7" width="2" height="26" fill="#0e1124" opacity=".6"/></g>
-      </defs>
-      <rect width="600" height="470" rx="16" fill="url(#sky)"/>
-      <circle cx="470" cy="90" r="70" fill="url(#moon)" opacity=".5"/><circle cx="470" cy="90" r="38" fill="#fbf4d6"/>
-      <g fill="#fff" opacity=".7"><circle cx="60" cy="50" r="1.5"/><circle cx="150" cy="90" r="1"/><circle cx="260" cy="40" r="1.6"/><circle cx="360" cy="70" r="1"/><circle cx="560" cy="170" r="1.3"/><circle cx="90" cy="150" r="1"/></g>
-      <!-- instituto -->
-      <g>
-        <path d="M70 330 V190 l40-40 40 40 V330Z" fill="#161b38"/>
-        <path d="M150 330 V170 h230 V330Z" fill="#1a2044"/>
-        <path d="M140 172 L265 110 390 172Z" fill="#12162f"/>
-        <path d="M380 330 V200 l35-45 35 45 V330Z" fill="#161b38"/>
-        <rect x="255" y="60" width="20" height="60" fill="#12162f"/><path d="M250 62 L265 30 280 62Z" fill="#12162f"/>
-        <g fill="#ffd77a"><use href="#win" x="180" y="200"/><use href="#win" x="220" y="200"/><use href="#win" x="300" y="200" opacity=".3"/><use href="#win" x="340" y="200"/><use href="#win" x="100" y="210" opacity=".4"/><use href="#win" x="407" y="215"/></g>
-        <g fill="#232a58"><rect x="170" y="255" width="10" height="75"/><rect x="215" y="255" width="10" height="75"/><rect x="305" y="255" width="10" height="75"/><rect x="350" y="255" width="10" height="75"/></g>
-        <path d="M245 330 v-45 a20 20 0 0 1 40 0 v45Z" fill="#0b0e1f"/>
-      </g>
-      <!-- lago -->
-      <rect x="0" y="330" width="600" height="140" fill="url(#lake)"/>
-      <g stroke="#3a4688" stroke-width="2" opacity=".6"><path d="M40 360h90M200 380h140M420 360h120M110 420h80M330 440h150"/></g>
-      <rect x="455" y="350" width="30" height="80" fill="#fbf4d6" opacity=".12"/>
-      <!-- cisne -->
-      <g transform="translate(390 372)">
-        <path d="M0 22 C10 40 70 40 82 20 C70 24 40 22 30 14 Z" fill="#f2f2f6"/>
-        <path d="M30 16 C26 -4 34 -28 48 -26 C56 -25 56 -16 50 -14 C42 -12 40 0 44 18Z" fill="#f2f2f6"/>
-        <path d="M50 -24 l12 4 -11 3Z" fill="#e05a2b"/>
-        <ellipse cx="42" cy="34" rx="44" ry="4" fill="#fff" opacity=".12"/>
-      </g>
-      <!-- chica con capa roja -->
-      <g transform="translate(120 300)">
-        <ellipse cx="22" cy="82" rx="30" ry="5" fill="#000" opacity=".35"/>
-        <path d="M22 0 C6 4 2 30 -4 80 H48 C42 30 38 4 22 0Z" fill="#b0122c"/>
-        <path d="M22 0 C10 3 8 24 6 80 H22Z" fill="#7d0a1e"/>
-        <circle cx="22" cy="10" r="11" fill="#f1d3bd"/>
-        <path d="M9 12 C9 -4 35 -4 35 12 C33 4 12 4 9 12Z" fill="#2a1a14"/>
-        <path d="M6 2 C10 -12 34 -12 38 2 C40 16 36 26 36 26 L34 10 C30 -2 14 -2 10 10 L8 26 C4 18 4 10 6 2Z" fill="#c8162f"/>
-        <rect x="40" y="38" width="14" height="18" rx="2" fill="#efe9da" transform="rotate(12 47 47)"/>
-      </g>
-      <!-- pluma -->
-      <g transform="translate(520 250) rotate(25)"><path d="M0 0 C18 -40 24 -80 6 -120 C-10 -80 -14 -40 0 0Z" fill="#e9e9f0" opacity=".85"/><path d="M0 0 L5 -110" stroke="#9aa0c4" stroke-width="1.5"/><path d="M0 0 l-2 14 4 0Z" fill="#9aa0c4"/></g>
-    </svg>
+    <figure class="cover" style="margin:0">
+      <img src="data:image/jpeg;base64,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" alt="Tapa del libro Leyra de Pablo De Santis: título en letra manuscrita roja sobre manchas circulares de tinta negra" width="560" height="852">
+      <figcaption>Tapa de la edición de Loqueleo</figcaption>
+    </figure>
   </div>
 </header>
 
-<nav aria-label="Capítulos de la guía"><div class="tabs" role="tablist" id="tabs"></div></nav>
+<div class="book">
+<nav class="toc" aria-label="Índice de la guía">
+  <div class="ex-libris"><b>Leyra</b><span>Guía de lectura · Ex libris</span></div>
+  <h2>Índice</h2>
+  <div class="tabs" role="tablist" aria-orientation="vertical" id="tabs"></div>
+  <p class="foot">Tocá un capítulo para abrirlo.</p>
+</nav>
 
 <main class="band"><div class="wrap">
 
@@ -151,6 +223,7 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:14px}
       <h2>Una heroína, un colegio y una casa con secretos</h2>
       <p class="lede">Leyra Simonides vive con su abuela en un pueblo de la provincia de Buenos Aires. Como la escuela del pueblo termina en tercer año, la abuela consigue que la acepten en el Instituto Témpore, un internado de señoritas donde se enseña dibujo y caligrafía.</p>
       <p>Allí Leyra se destaca enseguida, lo que le trae una amiga (Julia) y una enemiga feroz (Bastiana Libra). Gana un concurso para ilustrar el último libro del escritor Gabriel Témpore y pasa las vacaciones de invierno en la mansión de la familia, donde empiezan a pasar cosas cada vez más inquietantes.</p>
+      <p>Mirá la tapa otra vez: el título está escrito a mano, en rojo como la capa del uniforme, sobre círculos de tinta negra que parecen girar. Así es la novela: caligrafía, tinta y un remolino de misterio.</p>
       <div class="box">
         <h3>Ficha técnica</h3>
         <ul class="dots">
@@ -162,14 +235,37 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:14px}
           <li><b>Espacio:</b> un pueblo sin nombre de la provincia de Buenos Aires, el Instituto y la Casa Témpore</li>
         </ul>
       </div>
-    </div>
-    <div>
-      <div class="kicker">Cómo está armada</div>
       <div class="box">
         <h3>Las 4 partes y sus capítulos</h3>
         <div id="bars"></div>
         <p class="cap">Cada solapa de arriba resume una parte. La primera es casi la mitad del libro.</p>
       </div>
+    </div>
+    <div class="side">
+      <div class="plate">
+        <svg viewBox="0 0 600 470" role="img" aria-label="Ilustración: el Instituto Témpore de noche, con una chica de capa roja y un cisne en el lago">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34343c"/><stop offset="1" stop-color="#101013"/></linearGradient>
+            <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26262e"/><stop offset="1" stop-color="#0a0a0d"/></linearGradient>
+            <g id="win"><rect width="16" height="26" rx="8" fill="#ffd77a"/><rect x="7" width="2" height="26" fill="#111" opacity=".6"/></g>
+          </defs>
+          <rect width="600" height="470" rx="10" fill="url(#sky)"/>
+          <circle cx="470" cy="90" r="38" fill="#f3efe0"/>
+          <path d="M70 330 V190 l40-40 40 40 V330Z" fill="#1c1c22"/>
+          <path d="M150 330 V170 h230 V330Z" fill="#222229"/>
+          <path d="M140 172 L265 110 390 172Z" fill="#18181d"/>
+          <path d="M380 330 V200 l35-45 35 45 V330Z" fill="#1c1c22"/>
+          <rect x="255" y="60" width="20" height="60" fill="#18181d"/><path d="M250 62 L265 30 280 62Z" fill="#18181d"/>
+          <use href="#win" x="180" y="200"/><use href="#win" x="220" y="200"/><use href="#win" x="300" y="200" opacity=".3"/><use href="#win" x="340" y="200"/><use href="#win" x="100" y="210" opacity=".4"/><use href="#win" x="407" y="215"/>
+          <g fill="#2c2c34"><rect x="170" y="255" width="10" height="75"/><rect x="215" y="255" width="10" height="75"/><rect x="305" y="255" width="10" height="75"/><rect x="350" y="255" width="10" height="75"/></g>
+          <path d="M245 330 v-45 a20 20 0 0 1 40 0 v45Z" fill="#0b0b0e"/>
+          <rect x="0" y="330" width="600" height="140" fill="url(#lake)"/>
+          <g stroke="#3e3e48" stroke-width="2" opacity=".7"><path d="M40 360h90M200 380h140M420 360h120M110 420h80M330 440h150"/></g>
+          <g transform="translate(390 372)"><path d="M0 22 C10 40 70 40 82 20 C70 24 40 22 30 14 Z" fill="#f2f2f6"/><path d="M30 16 C26 -4 34 -28 48 -26 C56 -25 56 -16 50 -14 C42 -12 40 0 44 18Z" fill="#f2f2f6"/><path d="M50 -24 l12 4 -11 3Z" fill="#e05a2b"/></g>
+          <g transform="translate(120 300)"><ellipse cx="22" cy="82" rx="30" ry="5" fill="#000" opacity=".35"/><path d="M22 0 C6 4 2 30 -4 80 H48 C42 30 38 4 22 0Z" fill="#c4122f"/><path d="M22 0 C10 3 8 24 6 80 H22Z" fill="#7d0a1e"/><circle cx="22" cy="10" r="11" fill="#f1d3bd"/><path d="M6 2 C10 -12 34 -12 38 2 C40 16 36 26 36 26 L34 10 C30 -2 14 -2 10 10 L8 26 C4 18 4 10 6 2Z" fill="#d4163a"/><rect x="40" y="38" width="14" height="18" rx="2" fill="#efe9da" transform="rotate(12 47 47)"/></g>
+        </svg>
+      </div>
+      <p class="cap">El Instituto Témpore de noche. Ilustración original para esta guía.</p>
       <div class="box">
         <h3>El año de Leyra, en orden</h3>
         <ol class="steps">
@@ -204,14 +300,14 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:14px}
     </div>
     <div class="plate">
       <svg viewBox="0 0 400 400" role="img" aria-label="Ilustración: escritorio con tintero, pluma y hojas">
-        <rect width="400" height="400" rx="10" fill="#1a2044"/>
+        <rect width="400" height="400" rx="10" fill="#222229"/>
         <rect x="0" y="270" width="400" height="130" fill="#3a2418"/><rect x="0" y="270" width="400" height="8" fill="#56362a"/>
-        <g transform="rotate(-8 170 250)"><rect x="70" y="150" width="200" height="140" fill="#f4f4f8"/><g stroke="#8a93c7" stroke-width="2"><path d="M90 180h150M90 200h130M90 220h150M90 240h110"/></g><text x="92" y="172" font-family="Pinyon Script" font-size="22" fill="#1f3a8a">Había una vez…</text></g>
-        <path d="M280 300 h60 v-40 c0-20-60-20-60 0Z" fill="#0d0f1c"/><ellipse cx="310" cy="262" rx="30" ry="8" fill="#1f3a8a"/>
-        <g transform="translate(318 258) rotate(-30)"><path d="M0 0 C14 -40 20 -90 4 -140 C-10 -90 -14 -40 0 0Z" fill="#ececf3"/><path d="M0 0 L4 -130" stroke="#9aa0c4" stroke-width="1.5"/></g>
-        <circle cx="80" cy="70" r="26" fill="#fbf4d6" opacity=".9"/>
+        <g transform="rotate(-8 170 250)"><rect x="70" y="150" width="200" height="140" fill="#f4f4f8"/><g stroke="#9a9aa8" stroke-width="2"><path d="M90 180h150M90 200h130M90 220h150M90 240h110"/></g><text x="92" y="172" font-family="Pinyon Script" font-size="22" fill="#b30f2c">Había una vez…</text></g>
+        <path d="M280 300 h60 v-40 c0-20-60-20-60 0Z" fill="#0d0d10"/><ellipse cx="310" cy="262" rx="30" ry="8" fill="#000"/>
+        <g transform="translate(318 258) rotate(-30)"><path d="M0 0 C14 -40 20 -90 4 -140 C-10 -90 -14 -40 0 0Z" fill="#ececf3"/><path d="M0 0 L4 -130" stroke="#9aa0b4" stroke-width="1.5"/></g>
+        <circle cx="80" cy="70" r="26" fill="#f3efe0" opacity=".9"/>
       </svg>
-      <div class="cap" style="color:#c9cde4;padding:0 6px">Ilustración original para esta guía.</div>
+      <div class="cap" style="color:#c9c9d2;padding:0 6px">Ilustración original para esta guía.</div>
     </div>
   </div>
 </section>
@@ -224,160 +320,201 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:14px}
 </section>
 
 <section id="parte-1" data-t="I. La esgrima sutil" hidden>
+  <div class="kicker">Primera parte · 21 capítulos</div>
+  <h2>La esgrima sutil</h2>
+  <p class="lede">Es el planteo de la novela: conocemos a Leyra, su pasado y su llegada a un colegio donde equivocarse se paga caro. Termina con el duelo contra Bastiana y el concurso que la llevará a la Casa Témpore.</p>
   <div class="two">
     <div>
-      <div class="kicker">Primera parte · 21 capítulos</div>
-      <h2>La esgrima sutil</h2>
-      <p class="lede">Planteo inicial: Leyra entra al Instituto Témpore y aprende sus reglas, que parecen pensadas para que nadie se equivoque nunca.</p>
-      <ul class="dots">
-        <li>Leyra perdió a su mamá a los cinco años y no conoció a su papá. La crió su abuela Vera, que le enseñó a dibujar hasta darse cuenta de que la nena aprendía sola. Leyra copiaba, por ejemplo, las ilustraciones de las novelas de Julio Verne.</li>
-        <li>Como la escuela del pueblo llega solo hasta tercer año, Vera aprovecha una vacante y manda un sobre con los dibujos de su nieta. En abril llega la respuesta, escrita con letras azules perfectas y firmada por la directora, <b>Edith Lamarr</b>: Leyra fue aceptada.</li>
-        <li>El uniforme es negro, con una <b>capa roja</b> de segunda mano. Tiene bordadas unas iniciales, <b>MR</b>, y un rojo que ya no se fabrica: alguien la usó antes que ella.</li>
-        <li>A Leyra el colegio le parece una cárcel. Las profesoras no escriben en el pizarrón, rompen los trabajos con errores y no aceptan preguntas. Allí <i>cada trazo es definitivo</i>: no se puede borrar.</li>
-        <li>En la <b>sala de los retratos</b> hay cuadros de antiguas alumnas con marcas en la cara. Son las huellas de la <b>esgrima sutil</b>, un antiguo duelo con plumas y tinta entre alumnas.</li>
-        <li>Leyra se hace amiga de <b>Julia</b> y se gana el odio de <b>Bastiana Libra</b>. El conflicto estalla cuando las dos deben enfrentarse en la esgrima sutil.</li>
-        <li>La directora anuncia la <b>prueba Témpore</b>: la ganadora ilustrará el último libro de Gabriel Témpore y vivirá en su casa durante las vacaciones de invierno. Leyra y Bastiana compiten.</li>
-      </ul>
+      <div class="mom"><h3><span>Momento 1</span>Una infancia entre dibujos</h3>
+        <p>Leyra casi no recuerda a su mamá, que murió cuando ella tenía cinco años. Conserva imágenes sueltas: su madre le cepillaba el pelo, tallaba cabezas de lobo en cáscaras de naranja y le decía que sus ideas querían escaparse. A su papá nunca lo conoció.</p>
+        <p>La crió su abuela, <b>Vera Simonides</b>, que también había perdido a su marido, Berto: murió al caer de una torre de alta tensión donde trabajaba. Vera dejó que su nieta dibujara a su manera. Leyra dibujaba lo que tenía cerca (cardos, caballos, molinos, zapatos), copiaba las ilustraciones de las novelas de Julio Verne y usaba solo tres colores: azul, rojo y amarillo.</p></div>
+      <div class="mom"><h3><span>Momento 2</span>La vacante y la carta</h3>
+        <p>La escuela del pueblo llega solo hasta tercer año. Un día, en una confitería, Vera escucha por casualidad que una alumna del <b>Instituto Témpore</b> se fue del país y dejó un lugar libre. Sin consultarle a Leyra, junta sus mejores dibujos (elige los cardos), escribe una carta de recomendación y manda todo en un sobre.</p>
+        <p>Pasan meses. En abril llega la respuesta, escrita con una letra tan perfecta que a Vera le cuesta leerla: Leyra fue aceptada. La firma la directora, <b>Edith Lamarr</b>. La abuela está feliz; Leyra, no.</p></div>
+      <div class="mom"><h3><span>Momento 3</span>Un uniforme de segunda mano</h3>
+        <p>El uniforme es caro. La modista del pueblo, la señora Vieytes, guarda uno viejo que dejó una alumna hace años, conservado con naftalina. El vestido es de un gris oscuro y la <b>capa roja</b> tiene polvo acumulado en los hombros. Las botas las compran en la zapatería de Salvio, la única del pueblo.</p>
+        <p>Cuando Leyra se pone la capucha, la abuela la compara con Caperucita Roja. A Leyra el negro le parece "de velorio"; la modista opina que el rojo le da un toque de vida. Ese rojo es más intenso que el de los uniformes actuales y ya no se fabrica. La capa lleva bordadas unas iniciales que no son suyas: <b>MR</b>.</p></div>
+      <div class="mom"><h3><span>Momento 4</span>Llegada al Instituto</h3>
+        <p>Tras un viaje largo, Leyra ve el edificio: muros grises y ventanas angostas, mitad castillo, mitad cárcel. En la entrada hay un buzón con forma de sapo de bronce. Los recibe <b>Aragón</b>, portero y mayordomo: bajo, de lentes redondos, peinado a la gomina y con una sonrisa ensayada.</p>
+        <p>Aragón las guía hasta una sala con retratos de antiguas directoras, muchos arruinados por la humedad, y comenta que la directora no tolera las fotografías. Vera se despide. Aragón revisa las cosas de Leyra: le quita la <b>cartuchera de lata con el cisne</b> de la fábrica de tintas Témpore, que había sido de su madre. Al final se la deja, con una advertencia, pero sus útiles viejos terminan en el fuego y le dan un lápiz del colegio.</p></div>
+      <div class="mom"><h3><span>Momento 5</span>Las primeras clases</h3>
+        <p>La profesora <b>Farías</b>, bajita y de lentes gruesos, manda a las alumnas a dibujar una manzana. Después rompe casi todos los dibujos: la manzana tiene que "crecer en el papel", no caer sobre él. El único que se salva es el de Leyra. Ahí conoce a <b>Julia</b>, de pelo enrulado, pálida y de ojos grandes, que le da la bienvenida en voz baja.</p>
+        <p>Julia es buena en las materias teóricas pero torpe para dibujar. Su mamá murió y vive lejos, con su papá y su nueva esposa, así que tiene terror de que la expulsen. Le advierte a Leyra sobre <b>Bastiana Libra</b>: uñas largas como garras, nadie se mete con ella y hasta los profesores le temen.</p>
+        <p>Hay otras materias extrañas: el profesor <b>Rafer</b> cuenta la historia de los colores y explica que el verde era el más difícil de fabricar; la profesora <b>Trau</b> enseña a dibujar manos con un modelo articulado. Leyra va armando en su cabeza un plano del edificio, con su jardín central lleno de estatuas.</p></div>
+      <div class="mom"><h3><span>Momento 6</span>La prueba de caligrafía</h3>
+        <p>En el aula magna, bajo una gran araña encendida, la directora Lamarr (alta, vestida de negro) explica que la letra revela el carácter de quien escribe. Durante la prueba, Julia deja caer una gota de tinta sobre su hoja y Bastiana se ríe en silencio.</p>
+        <p>Leyra se anima a algo que nadie hace: le pide a la directora un ejemplo en el pizarrón. Y, a escondidas, cambia la hoja manchada de Julia por una limpia. Con ese gesto se gana una amiga para siempre y la atención de Bastiana.</p></div>
+      <div class="mom"><h3><span>Momento 7</span>El duelo: la esgrima sutil</h3>
+        <p>Los retratos de antiguas alumnas muestran caras con marcas que parecen cicatrices, pero son signos. Son las huellas de la <b>esgrima sutil</b>, un duelo antiguo que las autoridades permiten: las rivales se enfrentan con plumas y tinta, y cada una deja su símbolo en el rostro de la otra al dibujarla. Bastiana no olvida a Leyra, la provoca en un almuerzo y el enfrentamiento se vuelve inevitable. Mientras Leyra dibuja, siente la mirada de su rival clavada en ella.</p>
+        <p>Entre las compañeras corre un rumor que aísla a Leyra: la capa con las iniciales MR habría pertenecido a una alumna muerta.</p></div>
+      <div class="mom"><h3><span>Momento 8</span>La prueba Témpore</h3>
+        <p>Una tarde, la directora reúne a las cien alumnas en el jardín. Los Témpore convocan a la "prueba Témpore". Otros años, la ganadora ilustraba algún cuento de Gabriel Témpore que salía en los diarios. Esta vez el premio es mayor: ilustrar su <b>último libro</b> y trabajar en la Casa Témpore durante las vacaciones de invierno. Leyra conoce bien esos cuentos: estaban entre las pocas cosas que tenía en casa. Compite contra Bastiana y gana.</p></div>
     </div>
-    <div>
+    <div class="side">
       <div class="plate">
-        <svg viewBox="0 0 400 420" role="img" aria-label="Ilustración: dos plumas cruzadas como espadas sobre un retrato marcado">
-          <rect width="400" height="420" rx="10" fill="#141834"/>
-          <rect x="110" y="60" width="180" height="230" rx="4" fill="#5a4120"/><rect x="122" y="72" width="156" height="206" fill="#262d5a"/>
+        <svg viewBox="0 0 400 420" role="img" aria-label="Ilustración: dos plumas cruzadas como espadas bajo un retrato marcado">
+          <rect width="400" height="420" rx="10" fill="#18181d"/>
+          <rect x="110" y="60" width="180" height="230" rx="4" fill="#5a4120"/><rect x="122" y="72" width="156" height="206" fill="#2e2e36"/>
           <ellipse cx="200" cy="170" rx="48" ry="60" fill="#d9c0aa"/><path d="M152 150 C150 90 250 90 248 150 C240 115 160 115 152 150Z" fill="#2b1d16"/>
           <path d="M150 278 C160 230 240 230 250 278Z" fill="#111"/>
           <path d="M215 175 l14 0 M222 175 l0 18" stroke="#1f3a8a" stroke-width="4" stroke-linecap="round"/>
           <g transform="translate(200 330)">
-            <g transform="rotate(-40)"><path d="M0 0 C16 -40 22 -100 6 -150 C-10 -100 -14 -40 0 0Z" fill="#eceef6"/><path d="M0 0 L5 -140" stroke="#8a93c7" stroke-width="1.5"/><path d="M-3 0 L0 26 3 0Z" fill="#1f3a8a"/></g>
-            <g transform="rotate(40)"><path d="M0 0 C16 -40 22 -100 6 -150 C-10 -100 -14 -40 0 0Z" fill="#f2dfe3"/><path d="M0 0 L5 -140" stroke="#c0485c" stroke-width="1.5"/><path d="M-3 0 L0 26 3 0Z" fill="#b0122c"/></g>
+            <g transform="rotate(-40)"><path d="M0 0 C16 -40 22 -100 6 -150 C-10 -100 -14 -40 0 0Z" fill="#eceef6"/><path d="M0 0 L5 -140" stroke="#8a93c7" stroke-width="1.5"/><path d="M-3 0 L0 26 3 0Z" fill="#111"/></g>
+            <g transform="rotate(40)"><path d="M0 0 C16 -40 22 -100 6 -150 C-10 -100 -14 -40 0 0Z" fill="#f2dfe3"/><path d="M0 0 L5 -140" stroke="#c0485c" stroke-width="1.5"/><path d="M-3 0 L0 26 3 0Z" fill="#c4122f"/></g>
           </g>
-          <circle cx="160" cy="392" r="6" fill="#1f3a8a"/><circle cx="240" cy="392" r="6" fill="#b0122c"/>
         </svg>
       </div>
-      <p class="cap">Retrato de una antigua alumna con su marca de tinta. Dos plumas cruzadas, como en un duelo.</p>
-      <div class="quote">«Para ellas era un día como todos. Para Leyra, algo único.»</div>
+      <p class="cap">Retrato de una antigua alumna con su marca de tinta, y dos plumas en duelo.</p>
+      <div class="quote">«La manzana tiene que crecer en el papel, no caer sobre el papel.»</div>
+      <div class="box"><h3>Para pensar</h3><ul class="dots"><li>¿Por qué la primera parte se llama "La esgrima sutil"? ¿Qué tiene de duelo y qué de delicado?</li><li>¿Qué gesto de Leyra muestra que es valiente y solidaria?</li><li>¿Qué objetos de su pasado lleva Leyra al colegio y qué significan?</li></ul></div>
     </div>
   </div>
 </section>
 
 <section id="parte-2" data-t="II. El cisne blanco" hidden>
+  <div class="kicker">Segunda parte · 12 capítulos</div>
+  <h2>El cisne blanco</h2>
+  <p class="lede">Cambia el escenario: de las aulas a la mansión de los Témpore. Leyra va a trabajar como ilustradora y descubre una familia rara, una casa enorme y una pregunta que nadie quiere contestar: ¿dónde está Regina?</p>
   <div class="two">
     <div>
-      <div class="kicker">Segunda parte · 12 capítulos</div>
-      <h2>El cisne blanco</h2>
-      <p class="lede">Leyra gana la prueba y se muda por el invierno a la Casa Témpore, al lado del colegio. Cambia el escenario y crece el misterio.</p>
-      <ul class="dots">
-        <li><b>El cisne</b> es el símbolo de la vieja fábrica de tintas y cuadernos de los Témpore, que fundaron el colegio. Leyra guarda una cartuchera de lata con ese cisne: era de su mamá, de cuando la fábrica regalaba útiles a los chicos del pueblo.</li>
-        <li>La mansión tiene un salón de los siervos, un lago artificial, un muelle con una cabaña y, entre los árboles, una <b>casa del árbol</b>.</li>
-        <li>Leyra conoce a <b>Gabriel Témpore</b>, nieto del fundador, autor de cuentos de "aire antiguo", y a <b>Javiera</b>, la prima que maneja la casa. Javiera le saca sangre a Gabriel noche tras noche y amenaza a Leyra.</li>
-        <li>También aparecen el jardinero <b>Kovak</b>, su esposa <b>Graciana</b>, la antigua ilustradora <b>Amalia Genta</b> y un nombre que se repite: <b>Regina Témpore</b>, la hermana de Gabriel. ¿Dónde está?</li>
-        <li>Leyra encuentra un viejo bote a pedales con forma de cisne, blanco descascarado y oxidado, y lo arregla con paciencia: lija las paletas y repone tornillos.</li>
-        <li>Bastiana vuelve a cruzarse en su camino.</li>
-      </ul>
+      <div class="mom"><h3><span>Momento 1</span>Rumbo a la Casa Témpore</h3>
+        <p>Antes de partir, Leyra mira la cartuchera de lata de su madre y la guarda en la valija. El cisne grabado en ella era el emblema de la fábrica de tintas y cuadernos de los Témpore, la familia que fundó el colegio. En sus buenos tiempos la fábrica regalaba esas cartucheras a los chicos del pueblo; hoy quedan ruinas y unos pocos herederos ya mayores.</p></div>
+      <div class="mom"><h3><span>Momento 2</span>Los habitantes de la casa</h3>
+        <p><b>Gabriel Témpore</b> es el nieto del fundador y autor de los cuentos que Leyra debe ilustrar. Sus historias tienen un aire antiguo, como si nada del presente pudiera entrar en ellas. Está débil y enfermo.</p>
+        <p>Quien manda de verdad es su prima, <b>Javiera Real</b>, que "se ocupa de todo". Cada noche le saca sangre a Gabriel, como una especie de Drácula, y a Leyra la llena de prohibiciones y amenazas.</p>
+        <p>También viven allí el jardinero <b>Kovak</b> y su esposa <b>Graciana</b>, de pocas palabras. Leyra oye hablar de <b>Amalia Genta</b>, la ilustradora anterior de Témpore, y de <b>Regina Témpore</b>, la hermana de Gabriel, a quien nadie ve.</p></div>
+      <div class="mom"><h3><span>Momento 3</span>Una casa para explorar</h3>
+        <p>La mansión tiene un salón de los siervos, un lago artificial con muelle, una cabaña junto al agua y, entre los árboles, una casa del árbol. Leyra la recorre como recorrió el Instituto: armando un plano en su cabeza y anotando lo que no encaja.</p></div>
+      <div class="mom"><h3><span>Momento 4</span>El cisne-embarcación</h3>
+        <p>En un rincón abandonado Leyra encuentra un cisne grande: un bote a pedales con forma de cisne, con un pequeño timón y aletas que se mueven al pedalear. Fue blanco, pero la pintura está saltada y el mecanismo, oxidado. Quizás Gabriel jugaba con él de chico.</p>
+        <p>Con mucho esfuerzo lo arrastra hasta el sol y empieza a repararlo: lija el óxido de las paletas y repone tornillos perdidos. Desde una ventana, Gabriel dice que le encantaría volver a verlo en el agua. Javiera protesta que es imposible y peligroso, pero Témpore cierra la ventana. Por primera vez alguien la contradice.</p></div>
+      <div class="mom"><h3><span>Momento 5</span>Vuelve la rival</h3>
+        <p>Los misterios de Javiera alrededor de Regina crecen, y Bastiana vuelve a cruzarse en el camino de Leyra. El duelo del colegio no terminó: solo cambió de escenario.</p></div>
     </div>
-    <div>
+    <div class="side">
       <div class="plate">
         <svg viewBox="0 0 400 380" role="img" aria-label="Ilustración: bote con forma de cisne en un lago oscuro, con muelle y cabaña">
-          <rect width="400" height="380" rx="10" fill="#1a2044"/>
-          <circle cx="320" cy="70" r="30" fill="#fbf4d6"/>
-          <path d="M0 170 C80 120 160 150 240 125 C300 108 360 130 400 120 V200 H0Z" fill="#111531"/>
-          <rect x="0" y="195" width="400" height="185" fill="#0f1430"/>
+          <rect width="400" height="380" rx="10" fill="#222229"/>
+          <circle cx="320" cy="70" r="30" fill="#f3efe0"/>
+          <path d="M0 170 C80 120 160 150 240 125 C300 108 360 130 400 120 V200 H0Z" fill="#16161b"/>
+          <rect x="0" y="195" width="400" height="185" fill="#121216"/>
           <rect x="30" y="170" width="110" height="10" fill="#4a3220"/><g fill="#4a3220"><rect x="40" y="178" width="6" height="40"/><rect x="120" y="178" width="6" height="40"/></g>
-          <path d="M40 170 V130 l35-25 35 25 V170Z" fill="#251c35"/><rect x="66" y="140" width="16" height="18" fill="#ffd77a"/>
-          <g stroke="#2f3b7a" stroke-width="2"><path d="M30 250h80M200 300h150M60 330h90"/></g>
+          <path d="M40 170 V130 l35-25 35 25 V170Z" fill="#2a2430"/><rect x="66" y="140" width="16" height="18" fill="#ffd77a"/>
+          <g stroke="#3a3a44" stroke-width="2"><path d="M30 250h80M200 300h150M60 330h90"/></g>
           <g transform="translate(200 230)">
             <path d="M-70 20 C-60 60 60 60 80 10 C50 22 0 22 -20 10Z" fill="#ececf2"/>
-            <path d="M-70 20 C-60 60 60 60 80 10" fill="none" stroke="#9aa0c4" stroke-width="2" stroke-dasharray="6 8"/>
+            <path d="M-70 20 C-60 60 60 60 80 10" fill="none" stroke="#9aa0b4" stroke-width="2" stroke-dasharray="6 8"/>
             <path d="M-20 12 C-30 -30 -10 -70 14 -66 C28 -64 28 -48 18 -46 C4 -42 2 -20 8 14Z" fill="#ececf2"/>
             <path d="M18 -64 l18 6 -17 4Z" fill="#e05a2b"/><circle cx="12" cy="-58" r="2.5" fill="#111"/>
             <rect x="30" y="4" width="22" height="8" rx="3" fill="#8a6a3a"/>
-            <ellipse cx="5" cy="58" rx="90" ry="6" fill="#fff" opacity=".1"/>
           </g>
         </svg>
       </div>
-      <p class="cap">El bote-cisne del lago de la Casa Témpore, con su pintura blanca saltada.</p>
+      <p class="cap">El bote-cisne del lago, con su pintura blanca saltada.</p>
+      <div class="box"><h3>Para pensar</h3><ul class="dots"><li>¿Por qué Javiera puede compararse con un vampiro?</li><li>¿Qué representa que Leyra arregle el cisne y Gabriel quiera verlo navegar?</li><li>¿Cuál es el conflicto de esta parte: Bastiana, los dibujos o los misterios de Javiera sobre Regina?</li></ul></div>
     </div>
   </div>
 </section>
 
 <section id="parte-3" data-t="III. La capa roja" hidden>
+  <div class="kicker">Tercera parte · 10 capítulos</div>
+  <h2>La capa roja</h2>
+  <p class="lede">La tensión sube. Leyra choca con Javiera, vive dos situaciones de peligro y empieza a juntar pistas como una detective.</p>
   <div class="two">
     <div>
-      <div class="kicker">Tercera parte · 10 capítulos</div>
-      <h2>La capa roja</h2>
-      <p class="lede">La tensión sube: Leyra vive dos situaciones de peligro. Alguien quiere asustarla para que se vaya de la casa.</p>
-      <ul class="dots">
-        <li>La capa roja que Leyra lleva desde el primer día vuelve al centro. Las iniciales <b>MR</b> y ese rojo antiguo que ya nadie fabrica empiezan a parecer pistas sobre su dueña anterior.</li>
-        <li>Leyra va reuniendo señales sueltas: una marca con forma de letra griega <b>gamma</b> en una mejilla, el monograma de un laboratorio, una mancha en un camisón.</li>
-        <li>Cada vez queda más claro que en la casa alguien no dice la verdad. Leyra tiene que leer los signos como lee un texto antes de dibujarlo.</li>
-      </ul>
-      <div class="box">
-        <h3>Para pensar mientras leés</h3>
-        <ul class="dots">
-          <li>¿Por qué son peligrosas para Leyra esas dos situaciones?</li>
-          <li>¿Para qué querrían asustarla?</li>
-          <li>¿Qué personajes están metidos? Pista: los capítulos 2, 4 y 5 de esta parte.</li>
-        </ul>
-      </div>
+      <div class="mom"><h3><span>Momento 1</span>Un nuevo problema</h3>
+        <p>La tercera parte arranca con Leyra enfrentada a Javiera por su forma de moverse por la casa: pregunta, explora y no obedece las prohibiciones. Mientras tanto, tiene que seguir dibujando para el libro de Gabriel.</p></div>
+      <div class="mom"><h3><span>Momento 2</span>Dos situaciones de peligro</h3>
+        <p>Alguien intenta asustar a Leyra para que deje la casa. Hay dos escenas de miedo que conviene marcar en el libro (están entre los capítulos 2, 4 y 5 de esta parte): cuando las leas, preguntate quién está detrás, para qué y por qué eligieron a Leyra.</p></div>
+      <div class="mom"><h3><span>Momento 3</span>La capa como pista</h3>
+        <p>La capa roja vuelve al centro de la historia. Las iniciales <b>MR</b> y ese rojo antiguo que ya no se fabrica dejan de ser detalles de vestuario y se vuelven preguntas: ¿quién la usó antes?, ¿qué le pasó?</p></div>
+      <div class="mom"><h3><span>Momento 4</span>Señales sueltas</h3>
+        <p>Leyra junta indicios como si fueran trazos de un dibujo que todavía no se entiende: una marca con forma de letra griega <b>gamma</b> en una mejilla, el monograma de un laboratorio, una mancha en un camisón. Aparece también el <b>doctor Rey</b>. Leyra aplica lo que aprendió en el Instituto: antes de dibujar hay que leer.</p></div>
+      <div class="mom"><h3><span>Momento 5</span>¿Una batalla perdida?</h3>
+        <p>La parte cierra con un hecho que parece una derrota para Leyra. Al leerlo, pensá si de verdad lo es o si es la calma antes de la pelea final.</p></div>
     </div>
-    <div>
+    <div class="side">
       <div class="plate">
         <svg viewBox="0 0 400 420" role="img" aria-label="Ilustración: una capa roja colgada frente a un espejo, con iniciales bordadas">
-          <rect width="400" height="420" rx="10" fill="#16193a"/>
-          <rect x="230" y="60" width="130" height="260" rx="65" fill="#5a4120"/><rect x="242" y="72" width="106" height="236" rx="53" fill="#2b3566"/>
+          <rect width="400" height="420" rx="10" fill="#1a1a20"/>
+          <rect x="230" y="60" width="130" height="260" rx="65" fill="#5a4120"/><rect x="242" y="72" width="106" height="236" rx="53" fill="#34343e"/>
           <path d="M250 120 l80 160" stroke="#fff" stroke-width="6" opacity=".12"/>
           <path d="M140 50 a14 14 0 1 1 14 14 v12" fill="none" stroke="#c7c9d8" stroke-width="4"/>
           <path d="M154 76 L80 110 H228Z" fill="none" stroke="#c7c9d8" stroke-width="4"/>
-          <path d="M100 108 C90 200 70 300 50 380 H258 C238 300 218 200 208 108Z" fill="#b0122c"/>
+          <path d="M100 108 C90 200 70 300 50 380 H258 C238 300 218 200 208 108Z" fill="#c4122f"/>
           <path d="M154 108 C150 220 140 320 150 380 H50 C70 300 90 200 100 108Z" fill="#8a0d22"/>
           <path d="M100 108 C120 140 188 140 208 108" fill="none" stroke="#e0485f" stroke-width="5"/>
           <text x="164" y="200" font-family="Pinyon Script" font-size="34" fill="#f3d27a">MR</text>
-          <path d="M60 380 H250" stroke="#000" stroke-opacity=".3" stroke-width="8"/>
         </svg>
       </div>
       <p class="cap">La capa de segunda mano, con iniciales que no son las de Leyra.</p>
+      <div class="box"><h3>Para pensar</h3><ul class="dots"><li>¿Qué relación hay entre la capa roja y el cuento de Caperucita?</li><li>¿Por qué querrían asustar a Leyra? ¿A quién le conviene que se vaya?</li><li>¿El último hecho de esta parte es una batalla perdida?</li></ul></div>
     </div>
   </div>
 </section>
 
 <section id="parte-4" data-t="IV. La casa del árbol" hidden>
+  <div class="kicker">Cuarta parte · 10 capítulos</div>
+  <h2>La casa del árbol</h2>
+  <p class="lede">Desenlace. Leyra ya no está sola: reúne aliados, se anima a entrar donde nadie entra y descubre el secreto de los Témpore.</p>
   <div class="two">
     <div>
-      <div class="kicker">Cuarta parte · 10 capítulos</div>
-      <h2>La casa del árbol</h2>
-      <p class="lede">Desenlace. Todo lo que parecía raro empieza a encajar, y la casa del árbol guarda la clave.</p>
-      <p>Al principio de esta parte Leyra se reencuentra con varios personajes que la ayudan (pista: capítulos 1 y 3). Después se revela el secreto de los Témpore.</p>
+      <div class="mom"><h3><span>Momento 1</span>Los aliados</h3>
+        <p>La última parte empieza con Leyra encontrándose con personajes que la ayudan (capítulos 1 y 3). Es buen momento para preguntarse quiénes fueron amigos de verdad en la historia: Aragón, Kovak, Graciana, Gabriel… y quiénes no: Lamarr, Javiera.</p></div>
+      <div class="mom"><h3><span>Momento 2</span>El giro</h3>
+        <p>Un hecho fuerte termina con la calma y abre el conflicto final. El material escolar propone tres posibilidades para discutir: que la señora Lamarr llegue a la mansión sin aviso, que Leyra descubra que alguien destrozó al cisne o que Gabriel eche a Javiera de la casa. Leé y decidí cuál marca el verdadero comienzo del final.</p></div>
+      <div class="mom"><h3><span>Momento 3</span>La casa del árbol</h3>
+        <p>El lugar de juegos de la infancia de los Témpore guarda la clave del misterio. Hasta acá llegan todas las pistas: las extracciones de sangre, las iniciales de la capa, la hermana que nadie ve.</p></div>
       <details class="spoiler">
         <summary>Mostrar el final (¡contiene spoilers!)</summary>
         <ul class="dots" style="margin-top:10px">
-          <li><b>Javiera es la madre de Bastiana.</b> Entre las dos iban debilitando a Gabriel Témpore para quedarse con los bienes de la familia.</li>
-          <li><b>Regina Témpore está muerta.</b> Era ella la verdadera autora de los cuentos que Gabriel publicaba. La que se escondía en la casa del árbol era Bastiana.</li>
+          <li><b>Javiera es la madre de Bastiana.</b> Entre las dos iban debilitando a Gabriel con las extracciones de sangre para dominar la casa y quedarse con los bienes de la familia.</li>
+          <li><b>Regina Témpore está muerta,</b> y Javiera lo ocultaba. Regina era la verdadera autora de los cuentos que Gabriel publicaba como propios.</li>
+          <li>Quien vivía escondida en el cuarto de Regina y en la casa del árbol era <b>Bastiana</b>.</li>
           <li>El último día de Leyra en la casa, Bastiana la ataca y las dos caen al lago. <b>Kovak, el jardinero, salva a Leyra.</b> Bastiana se ahoga y su cuerpo nunca aparece.</li>
-          <li>Leyra termina el año escolar y se despide de Gabriel, Kovak, Graciana y Aragón.</li>
+          <li>Leyra termina el año escolar transformada: ya no es la chica que llegó obligada, sino alguien que enfrentó el miedo sola. Se despide de Gabriel, Kovak, Graciana y Aragón.</li>
         </ul>
         <p class="cap">Basado en resúmenes escolares de la novela; confirmalo con tu ejemplar.</p>
       </details>
     </div>
-    <div>
+    <div class="side">
       <div class="plate">
         <svg viewBox="0 0 400 420" role="img" aria-label="Ilustración: casa del árbol iluminada junto al lago de noche">
-          <rect width="400" height="420" rx="10" fill="#181d3e"/>
-          <circle cx="80" cy="70" r="26" fill="#fbf4d6"/>
-          <rect x="0" y="330" width="400" height="90" fill="#0d1129"/><g stroke="#2f3b7a" stroke-width="2"><path d="M20 360h90M220 380h140M90 400h100"/></g>
+          <rect width="400" height="420" rx="10" fill="#1e1e24"/>
+          <circle cx="80" cy="70" r="26" fill="#f3efe0"/>
+          <rect x="0" y="330" width="400" height="90" fill="#111115"/><g stroke="#33333c" stroke-width="2"><path d="M20 360h90M220 380h140M90 400h100"/></g>
           <path d="M235 330 C240 250 230 180 236 120 h26 C268 180 258 250 266 330Z" fill="#3a2418"/>
           <path d="M248 200 C200 190 170 170 150 150" stroke="#3a2418" stroke-width="12" fill="none"/>
-          <g fill="#152a22"><circle cx="250" cy="90" r="70"/><circle cx="190" cy="120" r="50"/><circle cx="315" cy="125" r="52"/><circle cx="160" cy="160" r="34"/></g>
-          <g fill="#1e3a2e"><circle cx="230" cy="70" r="40"/><circle cx="300" cy="100" r="30"/></g>
+          <g fill="#162820"><circle cx="250" cy="90" r="70"/><circle cx="190" cy="120" r="50"/><circle cx="315" cy="125" r="52"/><circle cx="160" cy="160" r="34"/></g>
+          <g fill="#1f382c"><circle cx="230" cy="70" r="40"/><circle cx="300" cy="100" r="30"/></g>
           <rect x="190" y="150" width="120" height="10" fill="#5a3b26"/>
           <path d="M200 150 V110 l50-30 50 30 V150Z" fill="#4a3220"/><path d="M192 112 l58-36 58 36" stroke="#2a1a10" stroke-width="8" fill="none"/>
           <rect x="236" y="112" width="26" height="24" fill="#ffd77a"/><rect x="248" y="112" width="2" height="24" fill="#4a3220"/>
           <g stroke="#7a5a3a" stroke-width="3"><path d="M210 160 V330M226 160 V330"/><path d="M210 190h16M210 220h16M210 250h16M210 280h16M210 310h16"/></g>
-          <rect x="236" y="340" width="26" height="40" fill="#ffd77a" opacity=".12"/>
         </svg>
       </div>
-      <p class="cap">La casa del árbol de la Casa Témpore: alguien vive ahí escondido.</p>
+      <p class="cap">La casa del árbol: alguien vive ahí escondido.</p>
+      <div class="box"><h3>Para pensar</h3><ul class="dots"><li>¿El desenlace repite el conflicto de las partes anteriores?</li><li>¿Es la misma Leyra la del principio y la del final?</li><li>¿Qué elementos de terror y de policial encontrás?</li></ul></div>
     </div>
   </div>
+</section>
+
+<section id="libro" data-t="Lectura por capítulos" hidden>
+  <div class="kicker">Libro completo</div>
+  <h2>Leé <i>Leyra</i> capítulo por capítulo</h2>
+  <p class="lede">Con tu ejemplar en la mano, marcá cada capítulo que terminás y anotá lo importante. Las marcas y notas quedan guardadas en este dispositivo.</p>
+  <div class="prog box">
+    <div class="prog-top"><b id="pg-txt">0 de 53 capítulos leídos</b><span id="pg-pct">0%</span></div>
+    <div class="track"><i id="pg-bar"></i></div>
+    <div class="prog-parts" id="pg-parts"></div>
+    <div class="tools" style="margin:14px 0 0;max-width:none">
+      <button class="btn ghost" type="button" id="lb-copy">Copiar mis notas</button>
+      <button class="btn ghost" type="button" id="lb-open">Abrir todas las notas</button>
+    </div>
+    <p class="cap" id="lb-msg" aria-live="polite"></p>
+  </div>
+  <div id="lb-parts"></div>
+  <p class="cap">Esta sección no reproduce el texto de la novela, que tiene derechos de autor: es un cuaderno de lectura para usar junto con el libro de Loqueleo.</p>
 </section>
 
 <section id="lugares" data-t="Mapa de lugares" hidden>
@@ -386,23 +523,23 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:14px}
   <p class="lede">Del pueblo abierto al colegio cerrado, y de ahí a una mansión con lago. Cada espacio es más misterioso que el anterior.</p>
   <div class="plate" style="margin-bottom:16px">
     <svg viewBox="0 0 900 320" role="img" aria-label="Mapa: pueblo, Instituto Témpore con la fábrica de tintas, y Casa Témpore con lago y casa del árbol">
-      <rect width="900" height="320" rx="10" fill="#1a2044"/>
-      <path d="M150 170 C250 120 330 210 430 160 S620 130 700 170" stroke="#c9cde4" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" fill="none"/>
-      <text x="270" y="140" font-family="Spectral" font-size="15" fill="#c9cde4">2 km</text>
-      <g transform="translate(60 120)"><rect x="0" y="40" width="40" height="40" fill="#3a4688"/><rect x="50" y="25" width="50" height="55" fill="#2e3970"/><path d="M45 25 l30-25 30 25Z" fill="#2e3970"/><circle cx="20" cy="95" r="22" fill="none" stroke="#5aa06f" stroke-width="3" stroke-dasharray="4 5"/></g>
+      <rect width="900" height="320" rx="10" fill="#222229"/>
+      <path d="M150 170 C250 120 330 210 430 160 S620 130 700 170" stroke="#c9c9d2" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" fill="none"/>
+      <text x="270" y="140" font-family="Spectral" font-size="15" fill="#c9c9d2">2 km</text>
+      <g transform="translate(60 120)"><rect x="0" y="40" width="40" height="40" fill="#44444f"/><rect x="50" y="25" width="50" height="55" fill="#3a3a44"/><path d="M45 25 l30-25 30 25Z" fill="#3a3a44"/><circle cx="20" cy="95" r="22" fill="none" stroke="#5aa06f" stroke-width="3" stroke-dasharray="4 5"/></g>
       <text x="40" y="250" font-family="Cormorant" font-weight="700" font-size="24" fill="#fff">El pueblo</text>
-      <text x="40" y="274" font-family="Spectral" font-size="14" fill="#c9cde4">plaza, confitería Las dos águilas,</text>
-      <text x="40" y="292" font-family="Spectral" font-size="14" fill="#c9cde4">casa de la abuela entre cardos</text>
-      <g transform="translate(380 90)"><rect x="0" y="30" width="110" height="70" fill="#2e3970"/><path d="M-6 32 l61-32 61 32Z" fill="#232c5c"/><g fill="#ffd77a"><rect x="14" y="48" width="10" height="16"/><rect x="50" y="48" width="10" height="16"/><rect x="86" y="48" width="10" height="16"/></g><rect x="120" y="50" width="50" height="50" fill="#3a2a2a"/><rect x="150" y="10" width="12" height="40" fill="#3a2a2a"/><path d="M165 50 l8-12" stroke="#666" stroke-width="3"/></g>
+      <text x="40" y="274" font-family="Spectral" font-size="14" fill="#c9c9d2">plaza, confitería Las dos águilas,</text>
+      <text x="40" y="292" font-family="Spectral" font-size="14" fill="#c9c9d2">casa de la abuela entre cardos</text>
+      <g transform="translate(380 90)"><rect x="0" y="30" width="110" height="70" fill="#3a3a44"/><path d="M-6 32 l61-32 61 32Z" fill="#2e2e36"/><g fill="#ffd77a"><rect x="14" y="48" width="10" height="16"/><rect x="50" y="48" width="10" height="16"/><rect x="86" y="48" width="10" height="16"/></g><rect x="120" y="50" width="50" height="50" fill="#3a2a2a"/><rect x="150" y="10" width="12" height="40" fill="#3a2a2a"/></g>
       <text x="360" y="230" font-family="Cormorant" font-weight="700" font-size="24" fill="#fff">Instituto Témpore</text>
-      <text x="360" y="254" font-family="Spectral" font-size="14" fill="#c9cde4">aula magna, sala de los retratos,</text>
-      <text x="360" y="272" font-family="Spectral" font-size="14" fill="#c9cde4">galería de columnas, jardín con estatuas;</text>
-      <text x="360" y="290" font-family="Spectral" font-size="14" fill="#c9cde4">al lado, la fábrica de tintas en ruinas</text>
-      <g transform="translate(690 70)"><ellipse cx="80" cy="120" rx="90" ry="28" fill="#0f1430"/><rect x="10" y="40" width="80" height="60" fill="#3a2e4e"/><path d="M4 42 l46-30 46 30Z" fill="#2c2340"/><circle cx="150" cy="60" r="30" fill="#1e3a2e"/><rect x="134" y="52" width="30" height="16" fill="#5a3b26"/><path d="M70 120 c8 -14 20 -14 22 -4" stroke="#eee" stroke-width="4" fill="none"/></g>
+      <text x="360" y="254" font-family="Spectral" font-size="14" fill="#c9c9d2">aula magna, sala de los retratos,</text>
+      <text x="360" y="272" font-family="Spectral" font-size="14" fill="#c9c9d2">galería de columnas, jardín con estatuas;</text>
+      <text x="360" y="290" font-family="Spectral" font-size="14" fill="#c9c9d2">al lado, la fábrica de tintas en ruinas</text>
+      <g transform="translate(690 70)"><ellipse cx="80" cy="120" rx="90" ry="28" fill="#141418"/><rect x="10" y="40" width="80" height="60" fill="#3a3040"/><path d="M4 42 l46-30 46 30Z" fill="#2c2434"/><circle cx="150" cy="60" r="30" fill="#1f382c"/><rect x="134" y="52" width="30" height="16" fill="#5a3b26"/><path d="M70 120 c8 -14 20 -14 22 -4" stroke="#eee" stroke-width="4" fill="none"/></g>
       <text x="690" y="230" font-family="Cormorant" font-weight="700" font-size="24" fill="#fff">Casa Témpore</text>
-      <text x="690" y="254" font-family="Spectral" font-size="14" fill="#c9cde4">salón de los siervos, muelle,</text>
-      <text x="690" y="272" font-family="Spectral" font-size="14" fill="#c9cde4">cabaña, lago artificial</text>
-      <text x="690" y="290" font-family="Spectral" font-size="14" fill="#c9cde4">y casa del árbol</text>
+      <text x="690" y="254" font-family="Spectral" font-size="14" fill="#c9c9d2">salón de los siervos, muelle,</text>
+      <text x="690" y="272" font-family="Spectral" font-size="14" fill="#c9c9d2">cabaña, lago artificial</text>
+      <text x="690" y="290" font-family="Spectral" font-size="14" fill="#c9c9d2">y casa del árbol</text>
     </svg>
   </div>
   <p class="cap">Esquema orientativo dibujado para esta guía: la novela nunca nombra el pueblo.</p>
@@ -420,7 +557,7 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:14px}
       <li><b>El talento y la envidia:</b> destacarse le trae admiración y también enemigas.</li>
       <li><b>Leer, escribir y dibujar:</b> para ilustrar hay que leer primero. Lápiz, tinta y papel valen mucho, y no hay pantallas ni celulares.</li>
       <li><b>Las apariencias engañan:</b> el autor famoso no escribe sus cuentos y la casa más elegante esconde un crimen.</li>
-      <li><b>La familia:</b> la abuela que lucha por Leyra contra una familia que se destruye por dinero.</li>
+      <li><b>La familia:</b> la abuela que lucha por Leyra frente a una familia que se destruye por ambición.</li>
     </ul>
   </div>
 </section>
@@ -443,76 +580,318 @@ footer{border-top:1px solid var(--line);color:var(--soft);font-size:14px}
   </div>
 </section>
 
-</div></main>
+<section id="examen" data-t="Examen" hidden>
+  <div class="kicker">Evaluación de lectura</div>
+  <h2>Examen sobre <i>Leyra</i></h2>
+  <p class="lede">Se responde en línea: elegí la opción en cada desplegable y escribí en los recuadros. Tus respuestas se guardan solas en este dispositivo. Al terminar, tocá <b>Entregar y corregir</b>.</p>
+  <div class="tools">
+    <button class="btn" type="button" id="grade">Entregar y corregir</button>
+    <button class="btn ghost" type="button" id="copy">Copiar respuestas</button>
+    <button class="btn ghost" type="button" id="print">Imprimir</button>
+    <button class="btn ghost" type="button" id="clear">Borrar todo</button>
+    <button class="btn ghost" type="button" id="togkey" aria-expanded="false">Clave del docente</button>
+  </div>
+  <p class="cap" id="msg" aria-live="polite" style="max-width:900px;margin:-6px auto 14px"></p>
+  <form class="exam" id="exam" autocomplete="off">
+    <div class="exhead">
+      <div>
+        <h3>Colegio Santa Ana · Prácticas del Lenguaje</h3>
+        <div class="meta">1.er año · Evaluación de lectura: <i>Leyra</i>, de Pablo De Santis · Total: 100 puntos · Aprobación: 60 puntos</div>
+        <div class="fields">
+          <label>Nombre y apellido<input data-k="nombre" type="text"></label>
+          <label>Curso y división<input data-k="curso" type="text" placeholder="1.° A"></label>
+          <label>Fecha<input data-k="fecha" type="date"></label>
+        </div>
+      </div>
+      <div class="nota">Puntaje automático<b id="nota">—</b><small>de 50</small></div>
+    </div>
 
-<footer class="band"><div class="wrap">Guía de lectura de <i>Leyra</i> (Pablo De Santis, Santillana/Loqueleo, 2018). Las ilustraciones son originales de esta guía, no del libro.</div></footer>
+    <div class="ex"><h4>I. Verdadero o falso <em>20 puntos</em></h4>
+      <p class="ins">Elegí V o F. Si la afirmación es falsa, escribí la corrección (1 punto la elección, 1 punto la corrección).</p>
+      <ol id="ex-vf"></ol></div>
+
+    <div class="ex"><h4>II. Opción múltiple <em>20 puntos</em></h4>
+      <p class="ins">Elegí la opción correcta en cada desplegable (2 puntos cada una).</p>
+      <ol id="ex-mc"></ol></div>
+
+    <div class="ex"><h4>III. ¿Quién es quién? <em>10 puntos</em></h4>
+      <p class="ins">Elegí la descripción que corresponde a cada personaje (1 punto cada una).</p>
+      <ol id="ex-match"></ol></div>
+
+    <div class="ex"><h4>IV. Ordená la historia <em>10 puntos</em></h4>
+      <p class="ins">Asigná a cada hecho un número del 1 al 8 según el orden en que sucede (1 punto por hecho bien ubicado; 10 puntos con el orden completo).</p>
+      <ol class="abc" id="ex-ord"></ol></div>
+
+    <div class="ex"><h4>V. Comprensión <em>20 puntos</em></h4>
+      <p class="ins">Respondé con oraciones completas, usando ejemplos de la novela (4 puntos cada una).</p>
+      <ol id="ex-open1"></ol></div>
+
+    <div class="ex"><h4>VI. Análisis literario <em>10 puntos</em></h4>
+      <ol id="ex-open2"></ol></div>
+
+    <div class="ex"><h4>VII. Producción escrita <em>10 puntos</em></h4>
+      <p class="ins">Imaginá que Leyra le escribe una carta a su abuela Vera durante su primera semana en la Casa Témpore. Escribí esa carta en primera persona (entre 120 y 200 palabras): contale cómo es la casa, quiénes viven allí, qué le preocupa y qué está dibujando. Respetá el formato de carta (lugar y fecha, saludo, cuerpo, despedida y firma).</p>
+      <textarea data-k="carta" rows="12" placeholder="Casa Témpore, ... de julio&#10;&#10;Querida abuela:"></textarea>
+      <div class="cap" id="wc">0 palabras</div>
+      <table class="crit"><thead><tr><th>Criterio</th><th>Puntos</th></tr></thead><tbody>
+        <tr><td>Formato de carta completo</td><td>2</td></tr>
+        <tr><td>Coherencia con los hechos y personajes de la novela</td><td>4</td></tr>
+        <tr><td>Primera persona y voz de Leyra</td><td>2</td></tr>
+        <tr><td>Ortografía y puntuación</td><td>2</td></tr>
+      </tbody></table></div>
+
+    <div class="result" id="result" hidden></div>
+
+    <div class="key" id="key" data-hide hidden>
+      <h3>Clave de corrección (para el docente)</h3>
+      <div id="keybody"></div>
+      <p class="cap">Las respuestas de V y VI son orientativas: se valora toda respuesta fundamentada en el texto.</p>
+    </div>
+  </form>
+</section>
+
+</div></main>
+</div>
+
+<footer class="band"><div class="wrap">Guía de lectura de <i>Leyra</i> (Pablo De Santis, Santillana/Loqueleo, 2018). Tapa: edición Loqueleo. Las demás ilustraciones son originales de esta guía, no del libro.</div></footer>
 
 <script>
 {
 const parts=[["I. La esgrima sutil",21],["II. El cisne blanco",12],["III. La capa roja",10],["IV. La casa del árbol",10]];
 document.getElementById('bars').innerHTML=parts.map(([n,c])=>`<div class="bar"><span>${n}</span><i style="width:${c/21*100}%"></i><span>${c}</span></div>`).join('');
 
-const col={ally:'#1f8a4c',test:'#b0122c',mys:'#1f3a8a'};
+const col={ally:'#1f8a4c',test:'#b30f2c',mys:'#2a2a30'};
 const chars=[
  ['Quienes ayudan a Leyra','ally',[
-  ['Leyra Simonides','Protagonista','Tiene 14 años y un talento enorme para dibujar. Es curiosa, terca y valiente, aunque al principio no quiere ir al Instituto.','L'],
-  ['Vera Simonides','Su abuela','La crió y la empuja a estudiar: manda sus dibujos al Instituto sin que Leyra quiera.','V'],
-  ['Julia','Su mejor amiga','Compañera del Instituto; comparte con Leyra las injusticias de las clases.','J'],
-  ['Kovak','Jardinero de la Casa Témpore','Parece hosco, pero termina siendo clave para salvar a Leyra.','K'],
-  ['Graciana','Esposa de Kovak','Vive y trabaja en la casa; parte del grupo que Leyra extrañará.','G'],
-  ['Aragón','Portero del Instituto','Una presencia silenciosa que acompaña a Leyra.','A']]],
+  ['Leyra Simonides','Protagonista','Tiene 14 años y un talento enorme para dibujar. Huérfana de madre, curiosa, terca y valiente, aunque al principio no quiere ir al Instituto.','L'],
+  ['Vera Simonides','Su abuela','Viuda, la crió y la empuja a estudiar: manda sus dibujos de cardos al Instituto sin preguntarle.','V'],
+  ['Julia','Su mejor amiga','Pelo enrulado, pálida, ojos grandes. Buena en teoría, torpe dibujando; teme que la expulsen.','J'],
+  ['Aragón','Portero y mayordomo del Instituto','Bajo, lentes redondos, gomina y sonrisa ensayada. Le quita la cartuchera y se la devuelve.','A'],
+  ['Kovak','Jardinero de la Casa Témpore','De pocas palabras, pero termina siendo clave para salvar a Leyra.','K'],
+  ['Graciana','Esposa de Kovak','Vive y trabaja en la casa; parte del grupo que Leyra extrañará.','G']]],
  ['Quienes la ponen a prueba','test',[
-  ['Bastiana Libra','La rival','Compañera de uñas largas y filosas; se vuelve la enemiga mortal de Leyra.','B'],
-  ['Edith Lamarr','La directora','Exigente, siempre vigilando. Firma la carta de aceptación con caligrafía perfecta.','E'],
-  ['Las profesoras','Instituto Témpore','Arbitrarias y severas: rompen los trabajos con errores y no permiten borrar.','P']]],
+  ['Bastiana Libra','La rival','Uñas largas como garras, temida hasta por los profesores y favorita de la directora.','B'],
+  ['Edith Lamarr','La directora','Alta, vestida de negro, siempre vigilando. Cree que la letra revela el carácter.','E'],
+  ['Farías','Profesora de dibujo','Bajita, de lentes gruesos. Rompe los dibujos que no le convencen.','F'],
+  ['Rafer y Trau','Profesores','Rafer enseña la historia de los colores; Trau, a dibujar manos con un modelo articulado.','R']]],
  ['Quienes esconden algo','mys',[
-  ['Gabriel Témpore','El escritor','Nieto del fundador del colegio y de la fábrica de tintas. Sus cuentos tienen un aire antiguo.','G'],
-  ['Javiera','Prima y encargada de la casa','Le saca sangre a Gabriel cada noche y amenaza a Leyra.','J'],
+  ['Gabriel Témpore','El escritor','Nieto del fundador del colegio y de la fábrica de tintas. Débil y enfermo; sus cuentos tienen aire antiguo.','G'],
+  ['Javiera Real','Prima y encargada de la casa','Le saca sangre a Gabriel cada noche y llena a Leyra de prohibiciones y amenazas.','J'],
   ['Regina Témpore','La hermana ausente','Todos la nombran, nadie la ve. Su historia es la clave del misterio.','R'],
-  ['Amalia Genta','La ilustradora anterior','Ilustró antes los cuentos de Témpore. ¿Qué le pasó?','A']]]
+  ['Amalia Genta','La ilustradora anterior','Ilustró antes los cuentos de Témpore.','A'],
+  ['Doctor Rey','Personaje secundario','Aparece en la mansión; prestá atención a su relación con las pistas del laboratorio.','D']]]
 ];
 const mono=(l,c)=>`<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="${c}"/><circle cx="32" cy="32" r="25" fill="none" stroke="#fff" stroke-opacity=".5"/><text x="32" y="44" text-anchor="middle" font-family="Pinyon Script" font-size="34" fill="#fff">${l}</text></svg>`;
 document.getElementById('chars').innerHTML=chars.map(([g,k,list])=>`<div class="group">${g}</div><div class="grid">${list.map(([n,r,d,l])=>`<div class="card">${mono(l,col[k])}<div><b>${n}</b><small>${r}</small><p>${d}</p></div></div>`).join('')}</div>`).join('');
 
 const sym=[
- ['El cisne','Logo de la fábrica de tintas Témpore y del bote del lago. Representa la belleza del arte, pero también un esplendor que ya pasó.','<path d="M14 44 C20 56 48 56 54 42 C46 46 32 44 26 38Z" fill="#fff"/><path d="M26 40 C22 26 28 12 38 13 C44 14 44 20 39 21 C33 22 32 30 34 42Z" fill="#fff"/><path d="M42 14 l8 3 -8 2Z" fill="#e05a2b"/>'],
- ['La capa roja','Parte del uniforme, heredada de otra alumna. El rojo marca a Leyra y recuerda a Caperucita: una chica que entra al bosque del lobo.','<path d="M32 12 L20 18 C18 34 14 46 10 54 H54 C50 46 46 34 44 18Z" fill="#e0485f"/>'],
- ['La tinta','Todo trazo es definitivo. Equivocarse deja marca, como las cicatrices de los retratos.','<path d="M22 50 h20 v-12 c0-8-20-8-20 0Z" fill="#fff"/><path d="M32 12 C40 24 40 30 32 34 C24 30 24 24 32 12Z" fill="#8fa8ff"/>'],
- ['La caligrafía','Letras perfectas que esconden significados: la carta de aceptación brilla tanto que cuesta leerla.','<text x="32" y="44" text-anchor="middle" font-family="Pinyon Script" font-size="36" fill="#fff">Aa</text>'],
+ ['El cisne','Logo de la fábrica de tintas Témpore, de la cartuchera de la madre y del bote del lago. Representa la belleza del arte y un esplendor que ya pasó.','<path d="M14 44 C20 56 48 56 54 42 C46 46 32 44 26 38Z" fill="#fff"/><path d="M26 40 C22 26 28 12 38 13 C44 14 44 20 39 21 C33 22 32 30 34 42Z" fill="#fff"/><path d="M42 14 l8 3 -8 2Z" fill="#e05a2b"/>'],
+ ['La capa roja','Heredada de otra alumna, con las iniciales MR. Marca a Leyra y recuerda a Caperucita: una chica que entra al bosque del lobo.','<path d="M32 12 L20 18 C18 34 14 46 10 54 H54 C50 46 46 34 44 18Z" fill="#e0243f"/>'],
+ ['La tinta','Todo trazo es definitivo. Equivocarse deja marca, como las cicatrices de los retratos.','<path d="M22 50 h20 v-12 c0-8-20-8-20 0Z" fill="#fff"/><path d="M32 12 C40 24 40 30 32 34 C24 30 24 24 32 12Z" fill="#111"/>'],
+ ['La caligrafía','Para Lamarr la letra revela el carácter. La carta de aceptación brilla tanto que cuesta leerla.','<text x="32" y="44" text-anchor="middle" font-family="Pinyon Script" font-size="36" fill="#fff">Aa</text>'],
  ['Las marcas en la cara','Signos de la esgrima sutil. Muestran que en el Instituto la competencia deja huellas.','<circle cx="32" cy="32" r="20" fill="#f1d3bd"/><path d="M36 30 h8 M40 30 v10" stroke="#1f3a8a" stroke-width="3" stroke-linecap="round"/>'],
- ['La casa del árbol','Un lugar de juego infantil convertido en escondite. Allí se resuelve el secreto.','<path d="M30 56 V30 h4 V56Z" fill="#a07850"/><circle cx="32" cy="22" r="16" fill="#3e7a5e"/><path d="M22 30 V22 l10-6 10 6 V30Z" fill="#a07850"/>']
+ ['La sangre','Las extracciones nocturnas de Javiera: el poder de una persona que vive a costa de otra, como un vampiro.','<path d="M32 12 C42 28 46 36 40 46 C36 52 28 52 24 46 C18 36 22 28 32 12Z" fill="#c4122f"/>'],
+ ['La casa del árbol','Un lugar de juego infantil convertido en escondite. Allí se resuelve el secreto.','<path d="M30 56 V30 h4 V56Z" fill="#a07850"/><circle cx="32" cy="22" r="16" fill="#3e7a5e"/><path d="M22 30 V22 l10-6 10 6 V30Z" fill="#a07850"/>'],
+ ['La manzana','Dibujar no es copiar: hay que hacer que las cosas "crezcan" en el papel, con vida propia.','<circle cx="32" cy="36" r="16" fill="#c4122f"/><path d="M32 20 v-8" stroke="#a07850" stroke-width="3"/><path d="M33 16 c6-6 12-4 12-4 c-2 6-8 8-12 4Z" fill="#3e7a5e"/>']
 ];
-document.getElementById('symbols').innerHTML=sym.map(([n,d,g])=>`<div class="card"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#1d2340"/>${g}</svg><div><b>${n}</b><p>${d}</p></div></div>`).join('');
+document.getElementById('symbols').innerHTML=sym.map(([n,d,g])=>`<div class="card"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#2a2a30"/>${g}</svg><div><b>${n}</b><p>${d}</p></div></div>`).join('');
 
 const qs=[
  ['¿Por qué Leyra tiene que cambiar de escuela?',['Porque la echaron','Porque la escuela del pueblo termina en tercer año','Porque se mudó a la ciudad'],1,'En su pueblo el único lugar para seguir estudiando es el Instituto Témpore.'],
- ['¿Quién manda los dibujos de Leyra al Instituto?',['Su abuela Vera','Julia','La propia Leyra'],0,'Vera lo hace casi contra la voluntad de su nieta.'],
- ['¿De qué era la fábrica de los Témpore?',['De pinceles','De barcos','De tintas y cuadernos'],2,'Su símbolo era un cisne, que aparece en la cartuchera de la mamá de Leyra.'],
- ['¿Qué tiene de raro la capa roja de Leyra?',['Es nueva y brillante','Es usada, con las iniciales MR y un rojo que ya no se fabrica','Es de su mamá'],1,'Perteneció antes a otra alumna: una pista que crece en la tercera parte.'],
+ ['¿Qué dibujos elige la abuela para mandar al Instituto?',['Los cardos','Los retratos','Los barcos de Julio Verne'],0,'Vera elige los cardos y los manda con una carta de recomendación.'],
+ ['¿De qué era la fábrica de los Témpore?',['De pinceles','De barcos','De tintas y cuadernos'],2,'Su símbolo era un cisne, el mismo de la cartuchera de la mamá de Leyra.'],
+ ['¿Qué tiene de raro la capa roja de Leyra?',['Es nueva y brillante','Es usada, con las iniciales MR y un rojo que ya no se fabrica','Es de su mamá'],1,'Perteneció antes a otra alumna; hasta se rumorea que era de una alumna muerta.'],
  ['¿Qué gana Leyra con la prueba Témpore?',['Una beca para la universidad','Ilustrar el último libro de Gabriel Témpore','Un viaje a la ciudad'],1,'Por eso pasa las vacaciones de invierno en la Casa Témpore.'],
+ ['¿Qué arregla Leyra en la Casa Témpore?',['Un piano','Un bote a pedales con forma de cisne','Un reloj de pared'],1,'Lija el óxido y repone tornillos; Gabriel quiere volver a verlo en el agua.'],
  ['¿Cómo se llama la cuarta parte de la novela?',['La casa del árbol','El cisne blanco','La esgrima sutil'],0,'Las partes son: La esgrima sutil, El cisne blanco, La capa roja y La casa del árbol.']
 ];
 const quiz=document.getElementById('quiz'),score=document.getElementById('score');
 let right=0,done=0;
-const draw=()=>{right=0;done=0;score.textContent='';
+const drawQuiz=()=>{right=0;done=0;score.textContent='';
  quiz.innerHTML=qs.map(([p,o],i)=>`<div class="q" data-i="${i}"><p>${i+1}. ${p}</p>${o.map((t,j)=>`<button class="opt" type="button" data-j="${j}">${t}</button>`).join('')}<div class="fb"></div></div>`).join('');};
 quiz.addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;const q=b.closest('.q');if(q.dataset.done)return;
  const [,,ok,why]=qs[+q.dataset.i];q.dataset.done=1;done++;
  q.querySelectorAll('.opt').forEach((x,j)=>{if(j===ok)x.classList.add('ok');});
  if(+b.dataset.j===ok){right++;q.querySelector('.fb').textContent='¡Bien! '+why;}else{b.classList.add('no');q.querySelector('.fb').textContent='Casi. '+why;}
- if(done===qs.length)score.textContent=`Resultado: ${right} de ${qs.length}`+(right>=5?' · ¡Excelente lectura!':right>=3?' · Vas bien, repasá las solapas.':' · Volvé a leer los resúmenes y probá otra vez.');});
-document.getElementById('reset').addEventListener('click',draw);
-draw();
+ if(done===qs.length)score.textContent=`Resultado: ${right} de ${qs.length}`+(right>=6?' · ¡Excelente lectura!':right>=4?' · Vas bien, repasá las solapas.':' · Volvé a leer los resúmenes y probá otra vez.');});
+document.getElementById('reset').addEventListener('click',drawQuiz);
+drawQuiz();
 
+/* ---------- examen ---------- */
+const vf=[
+ ['Leyra conoció a su padre cuando era chica.','F','Nunca conoció a su padre; su madre murió cuando ella tenía cinco años.'],
+ ['La abuela Vera se entera de la vacante en una confitería del pueblo.','V',''],
+ ['La carta de aceptación está firmada por Gabriel Témpore.','F','La firma la directora, Edith Lamarr.'],
+ ['El uniforme de Leyra es nuevo y fue comprado en la ciudad.','F','Es de segunda mano: se lo consigue la modista, la señora Vieytes.'],
+ ['El símbolo de la fábrica de tintas Témpore es un cisne.','V',''],
+ ['La profesora Farías rompe el dibujo de Leyra.','F','El de Leyra es el único que se salva.'],
+ ['Leyra cambia la hoja manchada de Julia por una limpia.','V',''],
+ ['La ganadora de la prueba Témpore ilustra el último libro de Gabriel y trabaja en su casa en invierno.','V',''],
+ ['Javiera es la hermana de Gabriel Témpore.','F','Es su prima; la hermana es Regina.'],
+ ['Leyra encuentra en la mansión un bote a pedales con forma de cisne.','V','']
+];
+const mc=[
+ ['¿Hasta qué año llega la escuela del pueblo de Leyra?',['Primer año','Tercer año','Quinto año'],1],
+ ['¿Qué iniciales tiene bordadas la capa roja?',['LS','MR','BL'],1],
+ ['¿Quién recibe a Leyra y a su abuela al llegar al Instituto?',['La directora Lamarr','El portero Aragón','La profesora Farías'],1],
+ ['¿Qué objeto de su madre lleva Leyra al colegio?',['Un medallón','Una cartuchera de lata con un cisne','Un cuaderno de dibujos'],1],
+ ['¿Qué enseña el profesor Rafer?',['La historia de los colores','Caligrafía','Dibujo de manos'],0],
+ ['Según la directora, la letra de una persona revela…',['su edad','su carácter','su familia'],1],
+ ['¿Qué le hace Javiera a Gabriel cada noche?',['Le lee sus cuentos','Le saca sangre','Le cierra la puerta con llave'],1],
+ ['¿Cómo se llama la tercera parte de la novela?',['El cisne blanco','La capa roja','La casa del árbol'],1],
+ ['¿Quién era la verdadera autora de los cuentos de Témpore?',['Amalia Genta','Javiera','Regina Témpore'],2],
+ ['¿Quién salva a Leyra cuando cae al lago?',['Kovak','Aragón','Gabriel'],0]
+];
+const match=[['Vera Simonides','su abuela, que la crió'],['Julia','compañera y mejor amiga'],['Bastiana Libra','rival de uñas largas'],['Edith Lamarr','directora del Instituto'],['Aragón','portero y mayordomo'],['Gabriel Témpore','nieto del fundador y escritor'],['Javiera Real','prima que maneja la casa'],['Kovak','jardinero de la mansión'],['Amalia Genta','ilustradora anterior de Témpore'],['Regina Témpore','hermana de Gabriel']];
+const shuffled=[6,2,9,0,4,7,1,5,3,8].map(i=>match[i][1]);
+const letters='abcdefghij';
+const ord=[['Leyra gana la prueba Témpore.',6],['Vera manda los dibujos de los cardos al Instituto.',1],['Leyra repara el bote con forma de cisne.',7],['La profesora Farías rompe los dibujos de la manzana.',4],['Llega la carta de aceptación firmada por Lamarr.',2],['Bastiana ataca a Leyra y ambas caen al lago.',8],['Aragón le quita la cartuchera con el cisne.',3],['Leyra cambia la hoja manchada de Julia en la prueba de caligrafía.',5]];
+const open1=[
+ ['¿Por qué Leyra no quería ir al Instituto Témpore? ¿Qué cambia en ella a lo largo del año?','No quería dejar su pueblo ni a su abuela, y el colegio le parecía una cárcel. Al final es más segura y valiente: enfrenta sola el peligro en la Casa Témpore.'],
+ ['Explicá qué es la "esgrima sutil" y por qué la primera parte lleva ese título.','Un duelo entre alumnas con plumas y tinta en el que cada rival deja su marca en el rostro de la otra al dibujarla. "Esgrima" por ser un combate; "sutil" porque es de ingenio y no de fuerza. Anticipa la rivalidad con Bastiana.'],
+ ['¿Qué gesto tiene Leyra con Julia durante la prueba de caligrafía? ¿Qué muestra sobre su personalidad?','Le cambia la hoja manchada de tinta por una limpia. Muestra solidaridad, valentía y que no acepta la crueldad del colegio.'],
+ ['¿Qué significa la frase de la profesora Farías: "la manzana tiene que crecer en el papel, no caer sobre el papel"?','Dibujar no es copiar mecánicamente: el dibujo tiene que tener vida, volumen y presencia, como si creciera.'],
+ ['¿Qué papel cumple Javiera en la Casa Témpore? ¿Por qué puede compararse con un personaje de terror?','Es la prima que controla la casa; debilita a Gabriel sacándole sangre y amenaza a Leyra. Se parece a un vampiro porque se alimenta, simbólicamente, de la vida de otro.']];
+const open2=[
+ ['¿Qué tipo de narrador cuenta la historia? Justificá. (2 puntos)','Tercera persona, omnisciente y focalizado en Leyra: cuenta desde afuera pero sigue lo que ella ve y siente.'],
+ ['¿Cuándo y dónde transcurre la novela? Nombrá dos indicios que permitan ubicar la época. (3 puntos)','Un pueblo de la provincia de Buenos Aires, en una época imprecisa (mediados del siglo XX): cartas por correo, máquinas de escribir, tocadiscos, Ford T, internados con uniforme.'],
+ ['Mencioná dos elementos del género de terror y uno del policial presentes en la obra. (3 puntos)','Terror: colegio y mansión sombríos, sótanos, extracciones de sangre, muertes extrañas. Policial: pistas (iniciales MR, marca gamma, monograma) y un secreto a descubrir.'],
+ ['Elegí un símbolo (el cisne, la capa roja o la tinta) y explicá qué representa. (2 puntos)','Respuesta abierta: por ejemplo, el cisne como esplendor perdido de los Témpore; la capa como marca y peligro (Caperucita); la tinta como lo definitivo de cada acto.']];
+
+const sel=(k,opts,ph)=>`<select data-k="${k}"><option value="">${ph}</option>${opts.map(([v,t])=>`<option value="${v}">${t}</option>`).join('')}</select>`;
+document.getElementById('ex-vf').innerHTML=vf.map(([t],i)=>`<li class="it" data-g="vf${i}"><div class="row">${sel('vf'+i,[['V','V'],['F','F']],'V / F')}<span>${t}</span></div><input type="text" class="corr" data-k="vfc${i}" placeholder="Si es falsa, escribí la corrección" aria-label="Corrección de la afirmación ${i+1}"><div class="res"></div></li>`).join('');
+document.getElementById('ex-mc').innerHTML=mc.map(([p,o],i)=>`<li class="it" data-g="mc${i}"><div>${p}</div>${sel('mc'+i,o.map((x,j)=>[j,`${'abc'[j]}) ${x}`]),'Elegí una opción…')}<div class="res"></div></li>`).join('');
+document.getElementById('ex-match').innerHTML=match.map(([n],i)=>`<li class="it" data-g="ma${i}"><div class="row"><b class="who">${n}</b>${sel('ma'+i,shuffled.map((d,j)=>[j,`${letters[j]}) ${d}`]),'Elegí…')}</div><div class="res"></div></li>`).join('');
+document.getElementById('ex-ord').innerHTML=ord.map(([t],i)=>`<li class="it" data-g="or${i}"><div class="row">${sel('or'+i,[1,2,3,4,5,6,7,8].map(n=>[n,n]),'N.°')}<span>${t}</span></div><div class="res"></div></li>`).join('');
+const openHTML=(arr,p)=>arr.map(([q],i)=>`<li class="it"><div>${q}</div><textarea data-k="${p}${i}" rows="4"></textarea><div class="res model" hidden></div></li>`).join('');
+document.getElementById('ex-open1').innerHTML=openHTML(open1,'o');
+document.getElementById('ex-open2').innerHTML=openHTML(open2,'a');
+
+const form=document.getElementById('exam'),msg=document.getElementById('msg'),SK='leyra-examen-v1';
+const fields=()=>[...form.querySelectorAll('[data-k]')];
+let saved={};try{saved=JSON.parse(localStorage.getItem(SK)||'{}')}catch(e){}
+fields().forEach(f=>{if(saved[f.dataset.k]!=null)f.value=saved[f.dataset.k];});
+const wc=()=>{const t=form.querySelector('[data-k=carta]').value.trim();document.getElementById('wc').textContent=(t?t.split(/\s+/).length:0)+' palabras';};
+const save=()=>{const o={};fields().forEach(f=>o[f.dataset.k]=f.value);try{localStorage.setItem(SK,JSON.stringify(o))}catch(e){}};
+form.addEventListener('input',()=>{save();wc();});
+form.addEventListener('submit',e=>e.preventDefault());
+wc();
+const val=k=>form.querySelector(`[data-k="${k}"]`).value;
+const mark=(g,ok,txt)=>{const li=form.querySelector(`[data-g="${g}"]`);li.classList.remove('ok','no');li.classList.add(ok?'ok':'no');li.querySelector('.res').textContent=ok?'✓ Correcto':'✗ '+txt;};
+
+const grade=()=>{
+ let s1=0,s2=0,s3=0,s4=0,miss=0;
+ vf.forEach(([,a,c],i)=>{const v=val('vf'+i);if(!v)miss++;const ok=v===a;if(ok)s1++;mark('vf'+i,ok,`Era ${a}.`+(c?' '+c:''));
+   if(ok&&a==='F'){form.querySelector(`[data-g="vf${i}"] .res`).textContent='✓ Correcto. Corrección esperada: '+c;}});
+ mc.forEach(([,o,a],i)=>{const v=val('mc'+i);if(v==='')miss++;const ok=v!==''&&+v===a;if(ok)s2+=2;mark('mc'+i,ok,`La respuesta era ${'abc'[a]}) ${o[a]}.`);});
+ match.forEach(([n,d],i)=>{const v=val('ma'+i);if(v==='')miss++;const ok=v!==''&&shuffled[+v]===d;if(ok)s3++;mark('ma'+i,ok,`Correspondía: ${d}.`);});
+ let good=0;ord.forEach(([,n],i)=>{const v=val('or'+i);if(v==='')miss++;const ok=+v===n;if(ok)good++;mark('or'+i,ok,`Iba en el lugar ${n}.`);});
+ s4=good===ord.length?10:good;
+ [...form.querySelectorAll('.model')].forEach((m,i)=>{const all=[...open1,...open2];m.hidden=false;m.innerHTML='<b>Respuesta orientativa:</b> '+all[i][1];});
+ const auto=s1+s2+s3+s4;
+ document.getElementById('nota').textContent=auto;
+ const r=document.getElementById('result');r.hidden=false;
+ r.innerHTML=`<h4>Resultado de la parte que se corrige sola</h4>
+ <div class="rows">
+  <div><span>I. Verdadero o falso (elección)</span><b>${s1} / 10</b></div>
+  <div><span>II. Opción múltiple</span><b>${s2} / 20</b></div>
+  <div><span>III. ¿Quién es quién?</span><b>${s3} / 10</b></div>
+  <div><span>IV. Ordená la historia</span><b>${s4} / 10</b></div>
+  <div class="tot"><span>Subtotal automático</span><b>${auto} / 50</b></div></div>
+ <p>Las correcciones de la parte I (10 puntos), las respuestas de V y VI (30 puntos) y la carta (10 puntos) las corrige el docente. Debajo de cada pregunta abierta ahora ves una respuesta orientativa para comparar.</p>
+ ${miss?`<p class="warn">Quedaron ${miss} desplegables sin responder.</p>`:''}`;
+ msg.textContent='Examen corregido. Revisá las marcas en cada pregunta.';
+ r.scrollIntoView({behavior:'smooth',block:'center'});
+};
+document.getElementById('grade').addEventListener('click',grade);
+
+const asText=()=>{const L=[];L.push('EXAMEN LEYRA · Colegio Santa Ana · 1.er año');L.push(`Alumno/a: ${val('nombre')} · Curso: ${val('curso')} · Fecha: ${val('fecha')}`,'');
+ L.push('I. Verdadero o falso');vf.forEach(([t],i)=>L.push(`${i+1}. [${val('vf'+i)||'-'}] ${t}${val('vfc'+i)?' → '+val('vfc'+i):''}`));
+ L.push('','II. Opción múltiple');mc.forEach(([p,o],i)=>{const v=val('mc'+i);L.push(`${i+1}. ${p} → ${v===''?'-':'abc'[v]+') '+o[v]}`);});
+ L.push('','III. ¿Quién es quién?');match.forEach(([n],i)=>{const v=val('ma'+i);L.push(`${n} → ${v===''?'-':shuffled[v]}`);});
+ L.push('','IV. Orden');ord.forEach(([t],i)=>L.push(`${val('or'+i)||'-'}. ${t}`));
+ L.push('','V. Comprensión');open1.forEach(([q],i)=>L.push(`${i+1}. ${q}`,val('o'+i)||'-',''));
+ L.push('VI. Análisis literario');open2.forEach(([q],i)=>L.push(`${i+1}. ${q}`,val('a'+i)||'-',''));
+ L.push('VII. Carta',val('carta')||'-');return L.join('\n');};
+document.getElementById('copy').addEventListener('click',async()=>{const t=asText();
+ try{await navigator.clipboard.writeText(t);msg.textContent='Respuestas copiadas: pegalas en un mail o mensaje para el docente.';}
+ catch(e){const r=document.getElementById('result');r.hidden=false;r.innerHTML='<h4>Copiá este texto</h4><textarea rows="12" readonly>'+t.replace(/</g,'&lt;')+'</textarea>';msg.textContent='No se pudo copiar automáticamente: seleccioná el texto y copialo.';r.querySelector('textarea').select();}});
+document.getElementById('clear').addEventListener('click',()=>{
+ if(msg.dataset.confirm!=='1'){msg.dataset.confirm='1';msg.textContent='¿Seguro? Tocá "Borrar todo" otra vez para confirmar.';setTimeout(()=>{msg.dataset.confirm='';},5000);return;}
+ msg.dataset.confirm='';fields().forEach(f=>f.value='');save();wc();
+ form.querySelectorAll('.it').forEach(li=>{li.classList.remove('ok','no');const r=li.querySelector('.res');if(r){r.textContent='';if(r.classList.contains('model'))r.hidden=true;}});
+ document.getElementById('result').hidden=true;document.getElementById('nota').textContent='—';msg.textContent='Respuestas borradas.';});
+document.getElementById('print').addEventListener('click',()=>{try{window.print();msg.textContent='Si no se abrió el diálogo de impresión, descargá el archivo HTML y abrilo en tu navegador.';}catch(e){msg.textContent='La impresión está bloqueada aquí: abrí el archivo HTML en tu navegador.';}});
+
+const key=`
+<p><b>I.</b></p><ol>${vf.map(([,a,c])=>`<li>${a}${c?' — '+c:''}</li>`).join('')}</ol>
+<p><b>II.</b> ${mc.map(([, ,a],i)=>`${i+1}) ${'abc'[a]}`).join(' · ')}</p>
+<p><b>III.</b> ${match.map(([n,d])=>`${n} → ${letters[shuffled.indexOf(d)]}`).join(' · ')}</p>
+<p><b>IV.</b> ${ord.map(([,n],i)=>`${letters[i]}) ${n}`).join(' · ')}</p>
+<p><b>V.</b></p><ol>${open1.map(([,a])=>`<li>${a}</li>`).join('')}</ol>
+<p><b>VI.</b></p><ol>${open2.map(([,a])=>`<li>${a}</li>`).join('')}</ol>
+<p><b>VII.</b> Evaluar con la tabla de criterios.</p>`;
+document.getElementById('keybody').innerHTML=key;
+const keyEl=document.getElementById('key'),tog=document.getElementById('togkey');
+tog.addEventListener('click',()=>{const open=keyEl.hidden;keyEl.hidden=!open;if(open)keyEl.removeAttribute('data-hide');else keyEl.setAttribute('data-hide','');tog.setAttribute('aria-expanded',open);if(open)keyEl.scrollIntoView({behavior:'smooth'});});
+
+/* ---------- lectura por capítulos ---------- */
+{
+const P=[
+ ['Primera parte','La esgrima sutil',21,{1:'¿Qué sabemos de Leyra, su madre y su abuela Vera? ¿Cómo es el pueblo?',21:'¿Qué conflicto quedó planteado al terminar la primera parte?'},
+  'Mientras leés, seguí: la carta de aceptación, el uniforme y la capa MR, la llegada con Aragón, las clases de Farías, Rafer y Trau, la prueba de caligrafía, el duelo con Bastiana y la prueba Témpore.'],
+ ['Segunda parte','El cisne blanco',12,{1:'¿Cómo llega Leyra a la Casa Témpore? ¿Qué lleva en la valija?',12:'¿Qué misterio sobre Regina queda abierto?'},
+  'Mientras leés, seguí: quién es quién en la mansión (Gabriel, Javiera, Kovak, Graciana), los espacios de la casa y el bote-cisne.'],
+ ['Tercera parte','La capa roja',10,{1:'¿Con qué nuevo problema empieza esta parte? ¿Con quién choca Leyra?',2:'Situación de peligro: ¿qué pasa y quién está detrás?',4:'Situación de peligro: ¿por qué quieren asustar a Leyra?',5:'¿Qué personajes participan en estas escenas de miedo?',10:'El último hecho de la parte, ¿es una batalla perdida para Leyra?'},
+  'Mientras leés, seguí: las pistas (iniciales MR, marca gamma, monograma del laboratorio, la mancha en el camisón) y al doctor Rey.'],
+ ['Cuarta parte','La casa del árbol',10,{1:'¿Con qué personajes se encuentra Leyra? ¿Por qué se reúne con ellos?',3:'¿Qué ayuda recibe Leyra en este capítulo?',10:'¿Cómo termina la historia? ¿Leyra es la misma que al principio?'},
+  'Mientras leés, seguí: qué hecho cambia todo (¿Lamarr llega sin aviso, el cisne destrozado o Javiera expulsada?) y qué esconde la casa del árbol.']
+];
+const SK='leyra-lectura-v1';let st={};try{st=JSON.parse(localStorage.getItem(SK)||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem(SK,JSON.stringify(st))}catch(e){}};
+const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const root=document.getElementById('lb-parts');
+root.innerHTML=P.map(([n,t,c,q,hint],pi)=>`<div class="lb-part" id="lbp${pi}">
+  <div class="lb-head"><div><div class="kicker">${n} · ${c} capítulos</div><h3>${t}</h3></div><span class="lb-count" id="lbc${pi}"></span></div>
+  <p class="cap" style="font-style:normal">${hint}</p>
+  <ol class="chaps">${Array.from({length:c},(_,k)=>{const id=`p${pi}c${k+1}`,g=q[k+1];const d=st[id]||{};
+   return `<li class="chap${d.r?' done':''}" data-id="${id}">
+    <label class="chk"><input type="checkbox" ${d.r?'checked':''} aria-label="Capítulo ${k+1} leído"><span>Capítulo ${k+1}</span></label>
+    ${g?`<span class="guide">${g}</span>`:'<span class="guide muted">Resumí en una o dos oraciones qué pasó.</span>'}
+    <details ${d.n?'open':''}><summary>Mis notas${d.n?' ✓':''}</summary><textarea rows="3" placeholder="Qué pasó, qué personaje apareció, qué pista encontré…">${esc(d.n)}</textarea></details>
+   </li>`;}).join('')}</ol></div>`).join('');
+const upd=()=>{let tot=0,read=0;
+ const parts=P.map(([n,t,c],pi)=>{let r=0;for(let k=1;k<=c;k++)if((st[`p${pi}c${k}`]||{}).r)r++;tot+=c;read+=r;
+  document.getElementById('lbc'+pi).textContent=`${r} / ${c}`;return [t,r,c];});
+ const pct=Math.round(read/tot*100);
+ document.getElementById('pg-txt').textContent=`${read} de ${tot} capítulos leídos`;
+ document.getElementById('pg-pct').textContent=pct+'%';
+ document.getElementById('pg-bar').style.width=pct+'%';
+ document.getElementById('pg-parts').innerHTML=parts.map(([t,r,c])=>`<div class="bar"><span>${t}</span><i style="width:${r/c*100}%"></i><span>${r}/${c}</span></div>`).join('');};
+root.addEventListener('change',e=>{const li=e.target.closest('.chap');if(!li||e.target.type!=='checkbox')return;
+ const id=li.dataset.id;st[id]=st[id]||{};st[id].r=e.target.checked;li.classList.toggle('done',e.target.checked);save();upd();});
+root.addEventListener('input',e=>{const li=e.target.closest('.chap');if(!li||e.target.tagName!=='TEXTAREA')return;
+ const id=li.dataset.id;st[id]=st[id]||{};st[id].n=e.target.value;save();});
+const msg=document.getElementById('lb-msg');
+document.getElementById('lb-open').addEventListener('click',e=>{const open=e.target.dataset.o!=='1';root.querySelectorAll('details').forEach(d=>d.open=open);e.target.dataset.o=open?'1':'';e.target.textContent=open?'Cerrar todas las notas':'Abrir todas las notas';});
+document.getElementById('lb-copy').addEventListener('click',async()=>{
+ const L=['MIS NOTAS DE LECTURA · LEYRA'];P.forEach(([n,t,c],pi)=>{L.push('',`${n.toUpperCase()}: ${t}`);for(let k=1;k<=c;k++){const d=st[`p${pi}c${k}`]||{};if(d.r||d.n)L.push(`Cap. ${k}${d.r?' (leído)':''}: ${d.n||''}`);}});
+ const t=L.join('\n');try{await navigator.clipboard.writeText(t);msg.textContent='Notas copiadas.';}catch(err){msg.textContent='No se pudo copiar automáticamente en este navegador.';}});
+upd();
+}
+
+/* ---------- solapas ---------- */
 const secs=[...document.querySelectorAll('main section')],tabs=document.getElementById('tabs');
-tabs.innerHTML=secs.map(s=>`<button role="tab" type="button" id="t-${s.id}" aria-controls="${s.id}">${s.dataset.t}</button>`).join('');
+const groups={inicio:'Antes de leer','parte-1':'La novela',libro:'Libro completo',lugares:'Después de leer',examen:'Evaluación'};
+const nums={inicio:'·',autor:'·',personajes:'·','parte-1':'I','parte-2':'II','parte-3':'III','parte-4':'IV',lugares:'·',temas:'·',repaso:'·',examen:'✎',libro:'¶'};
+tabs.innerHTML=secs.map(s=>(groups[s.id]?`<div class="grp" aria-hidden="true">${groups[s.id]}</div>`:'')+`<button role="tab" type="button" id="t-${s.id}" aria-controls="${s.id}"><span class="n">${nums[s.id]||'·'}</span><span>${s.dataset.t.replace(/^[IV]+\. /,'')}</span><span class="dots"></span></button>`).join('');
 const show=id=>{if(!secs.some(s=>s.id===id))id='inicio';
  secs.forEach(s=>s.hidden=s.id!==id);
  tabs.querySelectorAll('button').forEach(b=>{const on=b.id==='t-'+id;b.setAttribute('aria-selected',on);if(on)b.scrollIntoView({block:'nearest',inline:'nearest'});});};
 tabs.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const id=b.id.slice(2);
  if(location.hash!=='#'+id)location.hash=id;else show(id);
- const n=document.querySelector('nav');window.scrollTo({top:n.offsetTop,behavior:'smooth'});});
-tabs.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft'].includes(e.key))return;const bs=[...tabs.querySelectorAll('button')],i=bs.indexOf(document.activeElement);if(i<0)return;const n=bs[(i+(e.key==='ArrowRight'?1:-1)+bs.length)%bs.length];n.focus();n.click();});
+ const t=document.querySelector(innerWidth>900?'.book':'main');window.scrollTo({top:t.offsetTop,behavior:'smooth'});});
+tabs.addEventListener('keydown',e=>{const k=e.key;if(!['ArrowDown','ArrowUp','ArrowRight','ArrowLeft'].includes(k))return;e.preventDefault();const bs=[...tabs.querySelectorAll('button')],i=bs.indexOf(document.activeElement);if(i<0)return;const n=bs[(i+(k==='ArrowDown'||k==='ArrowRight'?1:-1)+bs.length)%bs.length];n.focus();n.click();});
 window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
 show(location.hash.slice(1));
 }
